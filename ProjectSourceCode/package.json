@@ -1,0 +1,21 @@
+
+{
+  "name": "group-project",
+  "version": "1.0.0",
+  "description": "CSCI 3308 Group Project",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "mocha"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "express-handlebars": "^8.0.1",
+    "pg": "^8.13.1",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "mocha": "^10.8.2",
+    "chai": "^4.5.0"
+  }
+}

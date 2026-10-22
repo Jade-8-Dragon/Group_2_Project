@@ -1,0 +1,37 @@
+GROUP PROJECT - GIT INSTRUCTIONS
+
+Option A: On your computer
+1. Copy the repository URL from GitHub (green Code button).
+2. In a terminal, run:
+   git clone REPOSITORY_URL
+   cd REPOSITORY_FOLDER
+
+Option B: GitHub Codespaces
+1. Open the repository on GitHub.
+2. Click Code > Codespaces > Create codespace on main.
+3. Open the terminal in your Codespace.
+
+-Add a .env file based on the contents of .env.example
+
+MAKE YOUR OWN BRANCH
+   git switch main
+   git pull origin main
+   git switch -c your-name
+
+Don't work directly on main.
+
+SAVE AND UPLOAD YOUR WORK
+   git add .
+   git commit -m "..."
+   git push -u origin your-name
+
+- After the first 'git push -u origin your-name', you can usually just run 'git push' on that branch.
+
+KEEP WORKING ON THE SAME BRANCH
+   git add .
+   git commit -m "..."
+   git push
+
+FINISH YOUR TASK
+1. On GitHub, open a Pull Request from your branch into main.
+2. Ask a teammate to review it, then merge.
