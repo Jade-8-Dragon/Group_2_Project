@@ -36,3 +36,21 @@ CREATE TABLE reviews (
 
     CHECK (customer_id <> musician_id)
 );
+
+-- query to test the data --
+
+/*
+SELECT
+    r.review_id,
+    customer.username AS customer_name,
+    musician.username AS musician_name,
+    r.rating,
+    r.comment,
+    r.created_at
+FROM reviews r
+JOIN users AS customer
+    ON r.customer_id = customer.user_id
+JOIN users AS musician
+    ON r.musician_id = musician.user_id
+ORDER BY r.created_at DESC;
+*/
