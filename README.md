@@ -4,7 +4,51 @@ Group 2 project CSCI 3308 Music Identifier
 
 
 
-<!-- Put your stuff here, in between the group project and the database documentation-->
+<!-- Put your stuff here, in between the group project and the database documentation.-->
+# Prerequisites
+
+Make sure the following are installed in order to run the application (You will also need access to the project repository and any environment variables.):
+
+## Node.js and npm
+
+Used to run the application and install dependencies
+
+## Git
+
+Used to clone the project repository
+
+## PostgreSQL
+
+Used for the application's database.
+
+
+# Running the application locally
+
+## 1. Clone the repository
+
+git clone <repository-url>
+
+## 2. navigate to the project directory
+
+cd Group_2_Project
+
+## 3. Install dependencies
+
+npm install
+
+## 4. Environment
+
+Configure the required environment variables in a .env file. These may include the database connection details and application configuration. Refer to the project's environment configuration instructions for the required variable names and values.
+
+## 5. Make sure PostgreSQL is running
+
+## 6. Start the application
+
+npm start
+
+## 7. Open the app in your browser
+
+http://localhost:3000
 
 
 # Database Documentation
