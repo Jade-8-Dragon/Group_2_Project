@@ -52,8 +52,57 @@
                     >
                 </div>
 
-                <!--Submit button-->
-                <div class="mb-3 text-center" id="submit-button">
+                <div class="mt-3" id="email-title">
+                    <label for="email">Email: </label>
+                </div>
+                <div class="mb-3 border email">
+                    <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Please Enter Your Email: "
+                    required
+                    >
+                </div>
+
+                <div class="mt-3">
+                    <h2>Choose your account type:</h2>
+                </div>
+                <div class="text-center">
+                    <div class="btn-group mb-3" role="group" aria-label="Choose your role">
+                        <div>
+                            <input 
+                            type="radio"
+                            class="btn-check"
+                            name="role"
+                            id="customer"
+                            value="customer"
+                            required
+                            >
+                            <label 
+                            class="btn btn-outline-primary" 
+                            for="customer"
+                            >Customer</label>
+                        </div>
+                        
+                        <div>
+                            <input
+                            type="radio"
+                            class="btn-check"
+                            name="role"
+                            id="musician"
+                            value="musician"
+                            required
+                            >
+                            <label 
+                            class="btn btn-outline-primary" 
+                            for="musician"
+                            >Musician</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3 text-center">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </form>
