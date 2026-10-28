@@ -50,6 +50,10 @@ npm start
 
 http://localhost:3000
 
+# Application Deployment
+
+The link to the deployed application will be posted here when the app is complete
+
 
 # Database Documentation
 
