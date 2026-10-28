@@ -4,7 +4,10 @@ Group 2 project CSCI 3308 Music Identifier
 
 
 
-<!-- Put your stuff here, in between the group project and the database documentation.-->
+# Application Description
+
+Music identifier is a site for finding, hiring and reviewing musicians to perform for you.
+
 # Prerequisites
 
 Make sure the following are installed in order to run the application (You will also need access to the project repository and any environment variables.):
