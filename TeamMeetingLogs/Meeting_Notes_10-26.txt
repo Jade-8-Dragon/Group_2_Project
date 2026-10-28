@@ -13,3 +13,13 @@ Finish lab 8; one person must submit on Canvas.
 
 10/27/2026
 We discussed what other parts of Lab 8 are missing and what else needs to go in the Read-Me. The last things we need to finish are including all the wording parts into Read-Me and completing the wireframe for the discovery page. 
+
+Extra Credit for Lab 8:
+1. The first issue that we might have trouble with is displaying 
+the artists pages in order of genre that the customer wants. 
+2. The second issue would be making sure that the website
+can't be hacked for user information
+3. The third issue would be creating a user profile page
+4. The fourth issue would be getting payment information for booking
+an artist and taking some profit
+5. The fifth issue would be creating a artists information page
