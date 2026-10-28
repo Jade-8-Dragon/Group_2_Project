@@ -8,6 +8,15 @@ Group 2 project CSCI 3308 Music Identifier
 
 Music identifier is a site for finding, hiring and reviewing musicians to perform for you.
 
+# Contributors
+
+- Jade Lerch, Jade-8-Dragon on GitHub
+- Fio Stepanuga, FioStepanuga on GitHub
+- Misha Oberdorfer, MishaOberdorfer on GitHub
+- Colin Voress, colinvoress6 on GitHub
+- Cody Murschel, Going-Merry-Crypto on GitHub
+- Seth Ciancio, Setherino on GitHub
+
 # Prerequisites
 
 Make sure the following are installed in order to run the application (You will also need access to the project repository and any environment variables.):
