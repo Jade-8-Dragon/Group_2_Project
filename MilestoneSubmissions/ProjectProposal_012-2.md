@@ -48,7 +48,7 @@ For event planners and venues **who** want to hire live local music, **Reserve M
 
 Public GitHub repository: <https://github.com/Jade-8-Dragon/Group_2_Project>
 
-All team members have been invited as collaborators and have accepted, except Seth Ciancio (`Setherino`), whose invite is pending.
+All six team members are collaborators on the repository.
 
 Repository root:
 
@@ -137,4 +137,7 @@ Documented per the CSCI 3308 syllabus ("Usage of Gen AI tools"):
 - **Fifth prompt (Claude, 2026-10-28):** "Change the description for the diagram, properly document"
 - **Plan:** No plan was written before this prompt.
 - **Response (significant parts):** Rewrote the Application Description in the root `README.md` so it describes the features in the use case diagram (finding and booking musicians, browsing and viewing profiles, posting availability, registering, logging in, and viewing and editing your own profile) rather than reviews. A matching Gen AI comment was added in the README itself.
+- **Sixth prompt (Claude, 2026-10-28):** "Accept the invite and merge to the main repo"
+- **Plan:** No plan was written before this prompt.
+- **Response (significant parts):** Accepted Seth's collaborator invite to the team repository and updated item 8 to say all six members are collaborators. PR #20 had already been merged by Misha Oberdorfer.
 - **Reviewed by:** Seth Ciancio.
