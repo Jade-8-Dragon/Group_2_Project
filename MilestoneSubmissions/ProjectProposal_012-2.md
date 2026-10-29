@@ -1,7 +1,5 @@
 # Project Proposal: Team 012-2
 
-> **Before submitting:** every `⚠️ TEAM TO FILL` below is a team decision or personal detail that must be filled in by the team. Do not submit with any of them left.
-
 ## 1. Team Number
 
 **012-2**
@@ -27,30 +25,30 @@
 
 ## 5. Application Description
 
-Music Identifier is a web application that connects people who want live music with the local musicians who perform it. Customers can browse and search musicians by genre, open a musician's profile to see their bio, location and starting price, and listen to songs the musician has uploaded, so they can judge a performer by their actual sound before reaching out to hire them for a party, wedding, restaurant night or other event.
+Music Identifier is a musician booking website that connects people who want live music with local musicians who are available to perform. Customers can browse musicians and open a musician's profile to see who they are, where they play, what they charge and when they are available, so they can find the right performer for a party, wedding, restaurant night or other event without searching across social media.
 
-Musicians create an account, build a profile with their stage name, bio, location and starting price, and use the Create page to upload songs with a title, genre, description and cover image. This gives independent and early-career performers a single place to showcase their work and be discovered by people who are actively looking to hire, without needing their own website or a booking agent.
+Musicians register an account, build a profile and use the Create page to post their availability: the dates and times they are free, the area they can play in, and their price for that slot. Their posted availability appears on their profile and in the browse list, so customers looking for a performer on a given day can see right away who is free. This gives independent and early-career performers a simple way to fill their calendar and be found by people who are actively looking to hire, without needing their own website or a booking agent.
 
-After an event, customers can leave a 1–5 star rating and written review on the musician's profile. Reviews help future customers pick a performer they can trust and help good musicians build a reputation. The application stores accounts, musician profiles and reviews in a PostgreSQL database, served by a Node.js/Express back end with Handlebars pages, all running in Docker containers.
+Both customers and musicians can view and edit their own profile at any time to keep their information up to date. The application stores accounts, musician profiles and availability in a PostgreSQL database, served by a Node.js/Express back end with Handlebars pages, all running in Docker containers.
 
 ## 6. Audience
 
 The application has two kinds of users:
 
-- **Customers:** people planning an event (private parties, weddings, small venues, restaurants, community events) who want to hire a musician but don't know where to find local talent or how to compare performers. Their problem is that musicians are scattered across social media and word of mouth, with no easy way to hear their music, see prices and read reviews from other customers in one place.
-- **Musicians:** local and independent performers who want more paid gigs. Their problem is visibility: they need a simple way to present their music, pricing and reputation to people who are actively looking to hire.
+- **Customers:** people planning an event (private parties, weddings, small venues, restaurants, community events) who want to hire a musician but don't know where to find local talent or who is free on their date. Their problem is that musicians are scattered across social media and word of mouth, with no single place to compare performers, prices and availability.
+- **Musicians:** local and independent performers who want more paid gigs. Their problem is visibility: they need a simple way to show when they are available, where they play and what they charge to people who are actively looking to hire.
 
-Usability and accessibility: most customers will search on a phone, so pages use a simple mobile-first layout with a fixed Home / Discover / Create navigation bar, large tap targets, genre filters instead of complex search forms, readable text, labelled form fields and alt text on images. Customers can browse without an account and only need to register to leave a review.
+Usability and accessibility: most customers will browse on a phone, so pages use a simple mobile-first layout with a fixed Home / Discover / Create navigation bar, large tap targets, a single search box instead of complex search forms, readable text, labelled form fields and alt text on images.
 
 ## 7. Vision Statement
 
-For event planners and venues **who** want to hire live local music, **Music Identifier** is a musician discovery and booking site **that** lets them hear a musician's songs, compare prices and read real customer reviews in one place. **Unlike** searching social media or relying on word of mouth, **our product** puts every local performer's music, pricing and reputation side by side so customers can hire with confidence.
+For event planners and venues **who** want to hire live local music, **Music Identifier** is a musician booking website **that** shows which local musicians are available, where they play and what they charge, all in one place. **Unlike** searching social media or relying on word of mouth, **our product** lets customers see at a glance who is free for their event and lets musicians fill their calendar by simply posting their availability.
 
 ## 8. Version Control
 
 Public GitHub repository: <https://github.com/Jade-8-Dragon/Group_2_Project>
 
-All team members have been invited as collaborators and have accepted, except Seth Ciancio (`Setherino`), whose invite has not been sent yet. ⚠️ TEAM TO FILL: Jade to invite `Setherino`.
+All team members have been invited as collaborators and have accepted, except Seth Ciancio (`Setherino`), whose invite is pending.
 
 Repository root:
 
@@ -74,8 +72,8 @@ Our team communicates through our **Discord** server, which we use to coordinate
 
 ## 11. Meeting Plan
 
-- **Team meeting:** Tuesdays at 6:30 PM. ⚠️ TEAM TO FILL: in-person or online, and location.
-- **Weekly meeting with TA:** Mondays at 9:00 AM. ⚠️ TEAM TO FILL: in-person or online, and location.
+- **Team meeting:** Tuesdays at 6:30 PM, in person at Norlin Library.
+- **Weekly meeting with TA:** Mondays at 9:00 AM, online over Zoom.
 
 ## 12. Use Case Diagram
 
@@ -87,15 +85,16 @@ Key features shown (7): register an account, log in, browse musicians, post avai
 
 All files are in [`wireframes/`](wireframes/):
 
-| Page | Wireframe |
-|---|---|
-| Home | `home.jpeg` |
-| Login | `Login (1).png`, `login.html` |
-| Register | `Register (1).png`, `register.html` |
-| Musician Profile | `Musicians Profile Page.png`, `musiciancsProfile.html` |
-| Discover | `Discover_012-2.svg` |
-| Create (upload a song) | `Create_012-2.svg` |
-| User Profile | `UserProfile_012-2.svg`, `userProfile.html` |
+| Page | Use case(s) | Wireframe |
+|---|---|---|
+| Home | Browse musicians | `Home_012-2.jpeg` |
+| Login | Log in | `Login_012-2.png`, `login_012-2.html` |
+| Register | Register account | `Register_012-2.png`, `register_012-2.html` |
+| Discover | Browse musicians | `Discover_012-2.svg` |
+| Musician Profile | View musician profile | `MusicianProfile_012-2.png`, `musicianProfile_012-2.html` |
+| Create | Post availability | `Create_012-2.svg` |
+| User Profile | View own profile | `UserProfile_012-2.svg`, `userProfile_012-2.html` |
+| Edit Profile | Edit own profile | `EditProfile_012-2.svg` |
 
 ## Extra Credit: Risk Analysis
 
@@ -105,9 +104,9 @@ All files are in [`wireframes/`](wireframes/):
 |---|---|---|---|
 | 1 | Sorting and filtering musician pages by the genre a customer wants is harder than expected (genre isn't stored in the current schema). | Medium | Add a `genre` column/table to the schema in week 1; build the Discover page with a single genre filter first, and add sorting only once filtering works. |
 | 2 | The site is hacked and user information leaks (e.g. SQL injection, stolen passwords). | High | Hash passwords with bcrypt, never store plain text; use parameterized queries only; keep secrets in `.env` (git-ignored); protect pages with session-based authentication; add tests for login/registration edge cases. |
-| 3 | The user profile page isn't finished on time. | Low | Keep the first version minimal (username, email, account type, the user's reviews) and assign it an owner and due date on the board in week 1. |
+| 3 | The user profile page isn't finished on time. | Low | Keep the first version minimal (username, email, account type, posted availability) and assign it an owner and due date on the board in week 1. |
 | 4 | Taking payment information for bookings (and a platform fee) is too complex and risky to build in 4 weeks. | High | Treat payments as out of scope for the MVP: customers contact or request a musician through the site; if time allows, use a hosted test-mode provider (e.g. Stripe Checkout) so we never handle card numbers ourselves. |
-| 5 | The artist information page (bio, songs, reviews) depends on file uploads and several tables, so it may slip. | Medium | Build it in stages: profile text and reviews from the database first, then song uploads; use the sample data in `insert.sql` so the page can be developed before uploads work. |
+| 5 | The artist information page depends on several tables (users, musician profiles, availability), so it may slip. | Medium | Build it in stages: profile text from the database first, then posted availability, then extras such as photos; use the sample data in `insert.sql` so the page can be developed before the forms that fill it are finished. |
 
 ---
 
@@ -118,8 +117,18 @@ Documented per the CSCI 3308 syllabus ("Usage of Gen AI tools"):
 - **Tool:** Claude (Anthropic), via Claude Code, 2026-10-28
 - **Plan:** No plan was written before this prompt.
 - **Prompt:** "Complete all missing items and document your work properly per course instructions"
-- **Response (significant parts):** Claude drafted this proposal's wording for items 4–7, 9, 13 and the extra-credit severities and mitigations, using only what was already in the repo: the README, `create.sql` / `insert.sql`, the team's wireframes, and the risks the team listed in `Meeting_Notes_10-26.txt`. Team number, names and GitHub usernames come from file names and commit history. Team name, emails (first.last@colorado.edu), meeting times, TA contact and invite status were provided by Seth Ciancio. Claude left every team decision it could not verify as "TEAM TO FILL". It also generated the Discover, Create and User Profile wireframe SVGs with a Python script. (An AI-generated use case diagram was replaced by the team's hand-drawn one, which Claude only renamed to add the team number.)
+- **Response (significant parts):** Claude drafted this proposal's wording for items 4–7, 9, 13 and the extra-credit severities and mitigations, using only what was already in the repo: the README, `create.sql` / `insert.sql`, the team's wireframes, and the risks the team listed in `Meeting_Notes_10-26_012-2.txt`. Team number, names and GitHub usernames come from file names and commit history. Team name, emails (first.last@colorado.edu), meeting times, TA contact and invite status were provided by Seth Ciancio. Claude left every team decision it could not verify as "TEAM TO FILL". It also generated the Discover, Create and User Profile wireframe SVGs with a Python script. (An AI-generated use case diagram was replaced by the team's hand-drawn one, which Claude only renamed to add the team number.)
 - **Second prompt (Claude, 2026-10-28):** "Make the github actions board now and document what you did, just use this prompt as the prompt"
 - **Plan:** No plan was written before this prompt.
 - **Response (significant parts):** Claude created the GitHub Projects board <https://github.com/users/Setherino/projects/1> (Todo / In Progress / Done) on Seth's account. It opened issues #8–#19 in the team repository for the remaining project work: Lab 8 (In Progress); genre schema, Express/Handlebars setup, register/login with sessions, Home, Discover, Create, musician profile, user profile, reviews, tests and deployment (Todo). It also added five Done cards for work teammates had already finished, credited by name from the commit history. It updated item 9 of this proposal with the board link.
-- **Reviewed by:** Seth Ciancio. ⚠️ The team should read and correct the drafted sections before submitting.
+- **Third prompt (Claude, 2026-10-28):** "Fix 3, 4, 5, and 6. THen fix 8, 9. For 10, change the proposal in favor of the diagram. Properly document every change. Mode for meeting one was zoom, meeting 2 was in Norlin Library."
+- **Plan:** No plan was written before this prompt.
+- **Response (significant parts):**
+  - Filled in item 11 with the meeting modes and locations Seth gave (TA meeting on Zoom, team meeting at Norlin Library).
+  - Removed every "TEAM TO FILL" placeholder and the pre-submission notes.
+  - Rewrote items 5–7 and the extra-credit mitigations for risks 3 and 5 so they describe the features in the team's use case diagram (register, log in, browse musicians, post availability, view a musician's profile, view and edit own profile), replacing earlier AI-drafted text about songs, genres and reviews.
+  - Regenerated the Discover and Create (post availability) and User Profile wireframes to match the diagram, and added an Edit Profile wireframe.
+  - Renamed the team's wireframe files and the 10-26 meeting notes to include team number 012-2, and updated the links between the login and register HTML wireframes.
+  - Removed `LICENSE` from the repository root so it holds only the folders and README the lab lists.
+  - Filled in the date and mode of the 10/26 meeting in `MeetingMinutes_012-2.md`.
+- **Reviewed by:** Seth Ciancio.

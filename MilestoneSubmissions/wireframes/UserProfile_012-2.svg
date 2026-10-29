@@ -2,10 +2,13 @@
 <!--
   Gen AI usage (CSCI 3308 syllabus, "Usage of Gen AI tools"):
   Tool: Claude (Anthropic), via Claude Code, 2026-10-28.
-  Prompt: "Complete all missing items and document your work properly per course instructions"
-  Response (significant part): Claude generated this SVG with a Python script, based on the
-  team's existing wireframes (home.jpeg, Musicians Profile Page.png, login/register) and the
-  database schema in ProjectSourceCode/src/init_data/create.sql. Reviewed by Seth Ciancio.
+  Prompt 1: "Complete all missing items and document your work properly per course instructions"
+  Prompt 2: "Fix 3, 4, 5, and 6. THen fix 8, 9. For 10, change the proposal in favor of the diagram.
+    Properly document every change. Mode for meeting one was zoom, meeting 2 was in Norlin Library."
+  Response (significant part): Claude generated this SVG with a Python script. Layout follows the
+  team's own wireframes (Home_012-2.jpeg nav bar, Musician Profile top bar); content follows the team's
+  use case diagram (browse musicians, post availability, view/edit own profile).
+  Reviewed by Seth Ciancio.
 -->
 <title>User Profile page Wireframe - Team 012-2</title>
 <rect width="420" height="845" fill="#fff"/>
@@ -27,29 +30,29 @@
 <circle cx="210" cy="140" r="45" fill="#eee" stroke="#333" stroke-width="1.5"/>
 <text x="210" y="145" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#888">avatar</text>
 <text x="210" y="210" font-family="Helvetica, Arial, sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#222">Username's Profile</text>
-<text x="210" y="234" font-family="Helvetica, Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="normal" fill="#555">email@example.com</text>
-<rect x="150" y="248" width="120" height="26" rx="13" fill="#e8eef8" stroke="#333" stroke-width="1.5"/>
-<text x="210" y="266" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="middle" font-weight="normal" fill="#222">Customer</text>
+<text x="210" y="234" font-family="Helvetica, Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="normal" fill="#555">email@colorado.edu</text>
+<rect x="135" y="248" width="150" height="26" rx="13" fill="#e8eef8" stroke="#333" stroke-width="1.5"/>
+<text x="210" y="266" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="middle" font-weight="normal" fill="#222">Customer / Musician</text>
 <rect x="40" y="290" width="160" height="34" rx="4" fill="none" stroke="#333" stroke-width="1.5"/>
 <text x="120" y="312" font-family="Helvetica, Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="normal" fill="#222">Edit profile</text>
 <rect x="220" y="290" width="160" height="34" rx="4" fill="none" stroke="#333" stroke-width="1.5"/>
 <text x="300" y="312" font-family="Helvetica, Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="normal" fill="#222">Log out</text>
 <line x1="30" y1="345" x2="390" y2="345" stroke="#333" stroke-width="1.5"/>
-<text x="30" y="375" font-family="Helvetica, Arial, sans-serif" font-size="17" text-anchor="start" font-weight="bold" fill="#222">My reviews</text>
-<rect x="30" y="392" width="360" height="86" rx="8" fill="none" stroke="#333" stroke-width="1.5"/>
-<text x="44" y="418" font-family="Helvetica, Arial, sans-serif" font-size="15" text-anchor="start" font-weight="bold" fill="#222">Musician stage name</text>
-<text x="376" y="418" font-family="Helvetica, Arial, sans-serif" font-size="14" text-anchor="end" font-weight="normal" fill="#222">&#9733;&#9733;&#9733;&#9733;&#9733;</text>
-<text x="44" y="442" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="start" font-weight="normal" fill="#555">Review comment text ...</text>
-<text x="44" y="464" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="start" font-weight="normal" fill="#888">date</text>
-<rect x="30" y="490" width="360" height="86" rx="8" fill="none" stroke="#333" stroke-width="1.5"/>
-<text x="44" y="516" font-family="Helvetica, Arial, sans-serif" font-size="15" text-anchor="start" font-weight="bold" fill="#222">Musician stage name</text>
-<text x="376" y="516" font-family="Helvetica, Arial, sans-serif" font-size="14" text-anchor="end" font-weight="normal" fill="#222">&#9733;&#9733;&#9733;&#9733;&#9733;</text>
-<text x="44" y="540" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="start" font-weight="normal" fill="#555">Review comment text ...</text>
-<text x="44" y="562" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="start" font-weight="normal" fill="#888">date</text>
-<rect x="30" y="588" width="360" height="86" rx="8" fill="none" stroke="#333" stroke-width="1.5"/>
-<text x="44" y="614" font-family="Helvetica, Arial, sans-serif" font-size="15" text-anchor="start" font-weight="bold" fill="#222">Musician stage name</text>
-<text x="376" y="614" font-family="Helvetica, Arial, sans-serif" font-size="14" text-anchor="end" font-weight="normal" fill="#222">&#9733;&#9733;&#9733;&#9733;&#9733;</text>
-<text x="44" y="638" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="start" font-weight="normal" fill="#555">Review comment text ...</text>
-<text x="44" y="660" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="start" font-weight="normal" fill="#888">date</text>
+<text x="30" y="375" font-family="Helvetica, Arial, sans-serif" font-size="16" text-anchor="start" font-weight="bold" fill="#222">My posted availability (musicians)</text>
+<rect x="30" y="392" width="360" height="80" rx="8" fill="none" stroke="#333" stroke-width="1.5"/>
+<text x="44" y="420" font-family="Helvetica, Arial, sans-serif" font-size="15" text-anchor="start" font-weight="bold" fill="#222">Date &#183; start - end time</text>
+<text x="44" y="444" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="start" font-weight="normal" fill="#555">Location &#183; $price</text>
+<rect x="308" y="417" width="66" height="28" rx="4" fill="none" stroke="#333" stroke-width="1.5"/>
+<text x="341" y="436" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#222">Delete</text>
+<rect x="30" y="484" width="360" height="80" rx="8" fill="none" stroke="#333" stroke-width="1.5"/>
+<text x="44" y="512" font-family="Helvetica, Arial, sans-serif" font-size="15" text-anchor="start" font-weight="bold" fill="#222">Date &#183; start - end time</text>
+<text x="44" y="536" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="start" font-weight="normal" fill="#555">Location &#183; $price</text>
+<rect x="308" y="509" width="66" height="28" rx="4" fill="none" stroke="#333" stroke-width="1.5"/>
+<text x="341" y="528" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#222">Delete</text>
+<rect x="30" y="576" width="360" height="80" rx="8" fill="none" stroke="#333" stroke-width="1.5"/>
+<text x="44" y="604" font-family="Helvetica, Arial, sans-serif" font-size="15" text-anchor="start" font-weight="bold" fill="#222">Date &#183; start - end time</text>
+<text x="44" y="628" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="start" font-weight="normal" fill="#555">Location &#183; $price</text>
+<rect x="308" y="601" width="66" height="28" rx="4" fill="none" stroke="#333" stroke-width="1.5"/>
+<text x="341" y="620" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#222">Delete</text>
 <text x="210.0" y="830" font-family="Helvetica, Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="normal" fill="#555">User Profile page wireframe, Team 012-2</text>
 </svg>
