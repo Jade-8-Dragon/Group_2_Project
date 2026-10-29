@@ -8,18 +8,18 @@
 
 ## 2. Team Name
 
-⚠️ TEAM TO FILL
+**Super Flying Airplane Team**
 
 ## 3. Team Members
 
 | Name | GitHub username | Email |
 |---|---|---|
-| Jade Lerch | [Jade-8-Dragon](https://github.com/Jade-8-Dragon) | ⚠️ TEAM TO FILL |
-| Fio Stepanuga | [FioStepanuga](https://github.com/FioStepanuga) | ⚠️ TEAM TO FILL |
-| Misha Oberdorfer | [MishaOberdorfer](https://github.com/MishaOberdorfer) | ⚠️ TEAM TO FILL |
-| Colin Voress | [colinvoress6](https://github.com/colinvoress6) | ⚠️ TEAM TO FILL |
-| Cody Murschel | [Going-Merry-Crypto](https://github.com/Going-Merry-Crypto) | ⚠️ TEAM TO FILL |
-| Seth Ciancio | [Setherino](https://github.com/Setherino) | ⚠️ TEAM TO FILL |
+| Jade Lerch | [Jade-8-Dragon](https://github.com/Jade-8-Dragon) | jade.lerch@colorado.edu |
+| Fio Stepanuga | [FioStepanuga](https://github.com/FioStepanuga) | fio.stepanuga@colorado.edu |
+| Misha Oberdorfer | [MishaOberdorfer](https://github.com/MishaOberdorfer) | misha.oberdorfer@colorado.edu |
+| Colin Voress | [colinvoress6](https://github.com/colinvoress6) | colin.voress@colorado.edu |
+| Cody Murschel | [Going-Merry-Crypto](https://github.com/Going-Merry-Crypto) | cody.murschel@colorado.edu |
+| Seth Ciancio | [Setherino](https://github.com/Setherino) | seth.ciancio@colorado.edu |
 
 ## 4. Application Name
 
@@ -50,7 +50,7 @@ For event planners and venues **who** want to hire live local music, **Music Ide
 
 Public GitHub repository: <https://github.com/Jade-8-Dragon/Group_2_Project>
 
-All team members are added as collaborators. ⚠️ TEAM TO FILL: confirm everyone, including `Setherino`, has accepted their invite.
+All team members have been invited as collaborators and have accepted, except Seth Ciancio (`Setherino`), whose invite has not been sent yet. ⚠️ TEAM TO FILL: Jade to invite `Setherino`.
 
 Repository root:
 
@@ -72,11 +72,11 @@ We will use a hybrid **Agile** approach for the 4-week project:
 
 ## 10. Communication Plan
 
-Our team communicates through our **Discord** server, which we use to coordinate work, share updates and plan meetings. Task-level discussion is tracked as comments on the GitHub issues on our project board, and we communicate with our TA in our weekly meeting and ⚠️ TEAM TO FILL (how you contact the TA: Discord, email, Canvas?).
+Our team communicates through our **Discord** server, which we use to coordinate work, share updates and plan meetings. Task-level discussion is tracked as comments on the GitHub issues on our project board, and we communicate with our TA in our weekly meeting and by email.
 
 ## 11. Meeting Plan
 
-- **Team meeting:** ⚠️ TEAM TO FILL (day(s), time, in-person/online, location). The 10-26 notes mention a work day on Thursday around 10 am before lab.
+- **Team meetings:** Mondays at 9:00 and Tuesdays at 6:30. ⚠️ TEAM TO FILL: am/pm, in-person or online, and location.
 - **Weekly meeting with TA:** ⚠️ TEAM TO FILL (day, time, location / in-person or online).
 
 ## 12. Use Case Diagram
@@ -120,5 +120,5 @@ Documented per the CSCI 3308 syllabus ("Usage of Gen AI tools"):
 - **Tool:** Claude (Anthropic), via Claude Code, 2026-10-28
 - **Plan:** No plan was written before this prompt.
 - **Prompt:** "Complete all missing items and document your work properly per course instructions"
-- **Response (significant parts):** Claude drafted this proposal's wording for items 4–7, 9, 12–13 and the extra-credit severities and mitigations, using only what was already in the repo: the README, `create.sql` / `insert.sql`, the team's wireframes, and the risks the team listed in `Meeting_Notes_10-26.txt`. Team number, names and GitHub usernames come from file names and commit history. Claude left every team decision it could not verify as "TEAM TO FILL". It also generated `UseCaseDiagram_012-2.svg` and the Discover, Create and User Profile wireframe SVGs with a Python script.
+- **Response (significant parts):** Claude drafted this proposal's wording for items 4–7, 9, 12–13 and the extra-credit severities and mitigations, using only what was already in the repo: the README, `create.sql` / `insert.sql`, the team's wireframes, and the risks the team listed in `Meeting_Notes_10-26.txt`. Team number, names and GitHub usernames come from file names and commit history. Team name, emails (first.last@colorado.edu), meeting times, TA contact and invite status were provided by Seth Ciancio. Claude left every team decision it could not verify as "TEAM TO FILL". It also generated `UseCaseDiagram_012-2.svg` and the Discover, Create and User Profile wireframe SVGs with a Python script.
 - **Reviewed by:** Seth Ciancio. ⚠️ The team should read and correct the drafted sections before submitting.
