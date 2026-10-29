@@ -77,6 +77,10 @@ http://localhost:3000
 
 The link to the deployed application will be posted here when the app is complete
 
+# Running the Tests
+
+## From the project root, run 'npm install', and 'npm test'
+
 
 # Database Documentation
 
