@@ -6,7 +6,7 @@
 
 ## 2. Team Name
 
-**Super Flying Airplane Team**
+**Reserve Music**
 
 ## 3. Team Members
 
@@ -21,11 +21,11 @@
 
 ## 4. Application Name
 
-**Music Identifier**
+**Reserve Music**
 
 ## 5. Application Description
 
-Music Identifier is a musician booking website that connects people who want live music with local musicians who are available to perform. Customers can browse musicians and open a musician's profile to see who they are, where they play, what they charge and when they are available, so they can find the right performer for a party, wedding, restaurant night or other event without searching across social media.
+Reserve Music is a musician booking website that connects people who want live music with local musicians who are available to perform. Customers can browse musicians and open a musician's profile to see who they are, where they play, what they charge and when they are available, so they can find the right performer for a party, wedding, restaurant night or other event without searching across social media.
 
 Musicians register an account, build a profile and use the Create page to post their availability: the dates and times they are free, the area they can play in, and their price for that slot. Their posted availability appears on their profile and in the browse list, so customers looking for a performer on a given day can see right away who is free. This gives independent and early-career performers a simple way to fill their calendar and be found by people who are actively looking to hire, without needing their own website or a booking agent.
 
@@ -42,7 +42,7 @@ Usability and accessibility: most customers will browse on a phone, so pages use
 
 ## 7. Vision Statement
 
-For event planners and venues **who** want to hire live local music, **Music Identifier** is a musician booking website **that** shows which local musicians are available, where they play and what they charge, all in one place. **Unlike** searching social media or relying on word of mouth, **our product** lets customers see at a glance who is free for their event and lets musicians fill their calendar by simply posting their availability.
+For event planners and venues **who** want to hire live local music, **Reserve Music** is a musician booking website **that** shows which local musicians are available, where they play and what they charge, all in one place. **Unlike** searching social media or relying on word of mouth, **our product** lets customers see at a glance who is free for their event and lets musicians fill their calendar by simply posting their availability.
 
 ## 8. Version Control
 
@@ -117,7 +117,7 @@ Documented per the CSCI 3308 syllabus ("Usage of Gen AI tools"):
 - **Tool:** Claude (Anthropic), via Claude Code, 2026-10-28
 - **Plan:** No plan was written before this prompt.
 - **Prompt:** "Complete all missing items and document your work properly per course instructions"
-- **Response (significant parts):** Claude drafted this proposal's wording for items 4–7, 9, 13 and the extra-credit severities and mitigations, using only what was already in the repo: the README, `create.sql` / `insert.sql`, the team's wireframes, and the risks the team listed in `Meeting_Notes_10-26_012-2.txt`. Team number, names and GitHub usernames come from file names and commit history. Team name, emails (first.last@colorado.edu), meeting times, TA contact and invite status were provided by Seth Ciancio. Claude left every team decision it could not verify as "TEAM TO FILL". It also generated the Discover, Create and User Profile wireframe SVGs with a Python script. (An AI-generated use case diagram was replaced by the team's hand-drawn one, which Claude only renamed to add the team number.)
+- **Response (significant parts):** Claude drafted this proposal's wording for items 4–7, 9, 13 and the extra-credit severities and mitigations, using only what was already in the repo: the README, `create.sql` / `insert.sql`, the team's wireframes, and the risks the team listed in `Meeting_Notes_10-26_012-2.txt`. Team number, names and GitHub usernames come from file names and commit history. Team name and app name, emails (first.last@colorado.edu), meeting times, TA contact and invite status were provided by Seth Ciancio. Claude left every team decision it could not verify as "TEAM TO FILL". It also generated the Discover, Create and User Profile wireframe SVGs with a Python script. (An AI-generated use case diagram was replaced by the team's hand-drawn one, which Claude only renamed to add the team number.)
 - **Second prompt (Claude, 2026-10-28):** "Make the github actions board now and document what you did, just use this prompt as the prompt"
 - **Plan:** No plan was written before this prompt.
 - **Response (significant parts):** Claude created the GitHub Projects board <https://github.com/users/Setherino/projects/1> (Todo / In Progress / Done) on Seth's account. It opened issues #8–#19 in the team repository for the remaining project work: Lab 8 (In Progress); genre schema, Express/Handlebars setup, register/login with sessions, Home, Discover, Create, musician profile, user profile, reviews, tests and deployment (Todo). It also added five Done cards for work teammates had already finished, credited by name from the commit history. It updated item 9 of this proposal with the board link.
@@ -131,4 +131,7 @@ Documented per the CSCI 3308 syllabus ("Usage of Gen AI tools"):
   - Renamed the team's wireframe files and the 10-26 meeting notes to include team number 012-2, and updated the links between the login and register HTML wireframes.
   - Removed `LICENSE` from the repository root so it holds only the folders and README the lab lists.
   - Filled in the date and mode of the 10/26 meeting in `MeetingMinutes_012-2.md`.
+- **Fourth prompt (Claude, 2026-10-28):** "App & team name is reserve music"
+- **Plan:** No plan was written before this prompt.
+- **Response (significant parts):** Changed the team name (item 2) and application name (items 4, 5 and 7) to Reserve Music, along with the app name in `README.md`. Merged Misha's re-photographed Login, Register and Musician Profile wireframes, which carry the team number, under the 012-2 file names.
 - **Reviewed by:** Seth Ciancio.

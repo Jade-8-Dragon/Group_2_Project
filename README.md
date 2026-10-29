@@ -1,12 +1,12 @@
 # Group_2_Project
-Group 2 project CSCI 3308 Music Identifier
+Group 2 project CSCI 3308 Reserve Music
 
 
 
 
 # Application Description
 
-Music identifier is a site for finding, hiring and reviewing musicians to perform for you.
+Reserve Music is a site for finding, hiring and reviewing musicians to perform for you.
 
 # Contributors
 
