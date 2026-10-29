@@ -6,7 +6,16 @@ Group 2 project CSCI 3308 Reserve Music
 
 # Application Description
 
-Reserve Music is a site for finding, hiring and reviewing musicians to perform for you.
+Reserve Music is a site for finding and booking local musicians to perform for you. Customers browse musicians and view their profiles, and musicians post their availability so customers can see who is free for their event. Everyone can register, log in, and view and edit their own profile.
+
+<!--
+  Gen AI usage (CSCI 3308 syllabus, "Usage of Gen AI tools"): Claude (Anthropic), via Claude Code, 2026-10-28.
+  Prompt: "Change the description for the diagram, properly document"
+  Response (significant part): Claude rewrote this description to match the team's use case diagram
+  (MilestoneSubmissions/Use_Case_Diagram_012-2.pdf): register, log in, browse musicians, post availability,
+  view a musician's profile, view own profile, edit own profile. The earlier description was written by
+  Seth Ciancio. Reviewed by Seth Ciancio.
+-->
 
 # Contributors
 

@@ -134,4 +134,7 @@ Documented per the CSCI 3308 syllabus ("Usage of Gen AI tools"):
 - **Fourth prompt (Claude, 2026-10-28):** "App & team name is reserve music"
 - **Plan:** No plan was written before this prompt.
 - **Response (significant parts):** Changed the team name (item 2) and application name (items 4, 5 and 7) to Reserve Music, along with the app name in `README.md`. Merged Misha's re-photographed Login, Register and Musician Profile wireframes, which carry the team number, under the 012-2 file names.
+- **Fifth prompt (Claude, 2026-10-28):** "Change the description for the diagram, properly document"
+- **Plan:** No plan was written before this prompt.
+- **Response (significant parts):** Rewrote the Application Description in the root `README.md` so it describes the features in the use case diagram (finding and booking musicians, browsing and viewing profiles, posting availability, registering, logging in, and viewing and editing your own profile) rather than reviews. A matching Gen AI comment was added in the README itself.
 - **Reviewed by:** Seth Ciancio.
