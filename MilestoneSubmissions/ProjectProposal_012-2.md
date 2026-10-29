@@ -76,8 +76,8 @@ Our team communicates through our **Discord** server, which we use to coordinate
 
 ## 11. Meeting Plan
 
-- **Team meetings:** Mondays at 9:00 and Tuesdays at 6:30. ⚠️ TEAM TO FILL: am/pm, in-person or online, and location.
-- **Weekly meeting with TA:** ⚠️ TEAM TO FILL (day, time, location / in-person or online).
+- **Team meeting:** Tuesdays at 6:30 PM. ⚠️ TEAM TO FILL: in-person or online, and location.
+- **Weekly meeting with TA:** Mondays at 9:00 AM. ⚠️ TEAM TO FILL: in-person or online, and location.
 
 ## 12. Use Case Diagram
 
