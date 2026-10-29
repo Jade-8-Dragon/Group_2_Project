@@ -72,7 +72,7 @@ We will use a hybrid **Agile** approach for the 4-week project:
 
 ## 10. Communication Plan
 
-⚠️ TEAM TO FILL. The meeting notes say the team is moving off Snapchat and is considering Discord; the lab says not to use IMs/text messages. Example: *"The team communicates on a Discord server with channels for general discussion, development and TA updates, and tracks task-level discussion as comments on the GitHub issues on our project board."*
+Our team communicates through our **Discord** server, which we use to coordinate work, share updates and plan meetings. Task-level discussion is tracked as comments on the GitHub issues on our project board, and we communicate with our TA in our weekly meeting and ⚠️ TEAM TO FILL (how you contact the TA: Discord, email, Canvas?).
 
 ## 11. Meeting Plan
 
