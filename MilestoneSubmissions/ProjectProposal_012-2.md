@@ -79,9 +79,9 @@ Our team communicates through our **Discord** server, which we use to coordinate
 
 ## 12. Use Case Diagram
 
-![Use case diagram](UseCaseDiagram_012-2.svg)
+See [`Use_Case_Diagram_012-2.pdf`](Use_Case_Diagram_012-2.pdf) (drawn by Colin Voress).
 
-Key features shown (10): register, log in/out, discover musicians by genre, search musicians, view a musician's profile, listen to songs, rate & review a musician, manage own profile, create/edit a musician listing, and upload songs. Actors: Guest, Customer and Musician (customer and musician are the `user_type` values in the `users` table).
+Key features shown (7): register an account, log in, browse musicians, post availability, view a musician's profile, view own profile, and edit own profile. Actors: Customer and Musician.
 
 ## 13. Wireframes
 
@@ -118,7 +118,7 @@ Documented per the CSCI 3308 syllabus ("Usage of Gen AI tools"):
 - **Tool:** Claude (Anthropic), via Claude Code, 2026-10-28
 - **Plan:** No plan was written before this prompt.
 - **Prompt:** "Complete all missing items and document your work properly per course instructions"
-- **Response (significant parts):** Claude drafted this proposal's wording for items 4–7, 9, 12–13 and the extra-credit severities and mitigations, using only what was already in the repo: the README, `create.sql` / `insert.sql`, the team's wireframes, and the risks the team listed in `Meeting_Notes_10-26.txt`. Team number, names and GitHub usernames come from file names and commit history. Team name, emails (first.last@colorado.edu), meeting times, TA contact and invite status were provided by Seth Ciancio. Claude left every team decision it could not verify as "TEAM TO FILL". It also generated `UseCaseDiagram_012-2.svg` and the Discover, Create and User Profile wireframe SVGs with a Python script.
+- **Response (significant parts):** Claude drafted this proposal's wording for items 4–7, 9, 13 and the extra-credit severities and mitigations, using only what was already in the repo: the README, `create.sql` / `insert.sql`, the team's wireframes, and the risks the team listed in `Meeting_Notes_10-26.txt`. Team number, names and GitHub usernames come from file names and commit history. Team name, emails (first.last@colorado.edu), meeting times, TA contact and invite status were provided by Seth Ciancio. Claude left every team decision it could not verify as "TEAM TO FILL". It also generated the Discover, Create and User Profile wireframe SVGs with a Python script. (An AI-generated use case diagram was replaced by the team's hand-drawn one, which Claude only renamed to add the team number.)
 - **Second prompt (Claude, 2026-10-28):** "Make the github actions board now and document what you did, just use this prompt as the prompt"
 - **Plan:** No plan was written before this prompt.
 - **Response (significant parts):** Claude created the GitHub Projects board <https://github.com/users/Setherino/projects/1> (Todo / In Progress / Done) on Seth's account. It opened issues #8–#19 in the team repository for the remaining project work: Lab 8 (In Progress); genre schema, Express/Handlebars setup, register/login with sessions, Home, Discover, Create, musician profile, user profile, reviews, tests and deployment (Todo). It also added five Done cards for work teammates had already finished, credited by name from the commit history. It updated item 9 of this proposal with the board link.
