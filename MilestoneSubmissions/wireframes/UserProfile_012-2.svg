@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="845" viewBox="0 0 420 845">
+<!--
+  Gen AI usage (CSCI 3308 syllabus, "Usage of Gen AI tools"):
+  Tool: Claude (Anthropic), via Claude Code, 2026-10-28.
+  Prompt: "Complete all missing items and document your work properly per course instructions"
+  Response (significant part): Claude generated this SVG with a Python script, based on the
+  team's existing wireframes (home.jpeg, Musicians Profile Page.png, login/register) and the
+  database schema in ProjectSourceCode/src/init_data/create.sql. Reviewed by Seth Ciancio.
+-->
+<title>User Profile page Wireframe - Team 012-2</title>
+<rect width="420" height="845" fill="#fff"/>
+<rect x="10" y="10" width="400" height="780" rx="14" fill="none" stroke="#333" stroke-width="2"/>
+<text x="36" y="52" font-family="Helvetica, Arial, sans-serif" font-size="15" text-anchor="start" font-weight="normal" fill="#222">&#8592; Back</text>
+<rect x="205" y="33" width="58" height="28" rx="4" fill="none" stroke="#333" stroke-width="1.5"/>
+<text x="234" y="52" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="middle" font-weight="normal" fill="#222">Login</text>
+<rect x="270" y="33" width="58" height="28" rx="4" fill="none" stroke="#333" stroke-width="1.5"/>
+<text x="299" y="52" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="middle" font-weight="normal" fill="#222">Home</text>
+<rect x="335" y="33" width="62" height="28" rx="4" fill="none" stroke="#333" stroke-width="1.5"/>
+<text x="366" y="52" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="middle" font-weight="normal" fill="#222">Profile</text>
+<line x1="10" y1="75" x2="410" y2="75" stroke="#333" stroke-width="1.5"/>
+<line x1="10" y1="720" x2="410" y2="720" stroke="#333" stroke-width="1.5"/>
+<line x1="143" y1="720" x2="143" y2="790" stroke="#333" stroke-width="1.5"/>
+<line x1="277" y1="720" x2="277" y2="790" stroke="#333" stroke-width="1.5"/>
+<text x="76" y="765" font-family="Helvetica, Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="normal" fill="#222">HOME</text>
+<text x="210" y="765" font-family="Helvetica, Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="normal" fill="#222">DISCOVER</text>
+<text x="343" y="765" font-family="Helvetica, Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="normal" fill="#222">CREATE</text>
+<circle cx="210" cy="140" r="45" fill="#eee" stroke="#333" stroke-width="1.5"/>
+<text x="210" y="145" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" font-weight="normal" fill="#888">avatar</text>
+<text x="210" y="210" font-family="Helvetica, Arial, sans-serif" font-size="20" text-anchor="middle" font-weight="bold" fill="#222">Username's Profile</text>
+<text x="210" y="234" font-family="Helvetica, Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="normal" fill="#555">email@example.com</text>
+<rect x="150" y="248" width="120" height="26" rx="13" fill="#e8eef8" stroke="#333" stroke-width="1.5"/>
+<text x="210" y="266" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="middle" font-weight="normal" fill="#222">Customer</text>
+<rect x="40" y="290" width="160" height="34" rx="4" fill="none" stroke="#333" stroke-width="1.5"/>
+<text x="120" y="312" font-family="Helvetica, Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="normal" fill="#222">Edit profile</text>
+<rect x="220" y="290" width="160" height="34" rx="4" fill="none" stroke="#333" stroke-width="1.5"/>
+<text x="300" y="312" font-family="Helvetica, Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="normal" fill="#222">Log out</text>
+<line x1="30" y1="345" x2="390" y2="345" stroke="#333" stroke-width="1.5"/>
+<text x="30" y="375" font-family="Helvetica, Arial, sans-serif" font-size="17" text-anchor="start" font-weight="bold" fill="#222">My reviews</text>
+<rect x="30" y="392" width="360" height="86" rx="8" fill="none" stroke="#333" stroke-width="1.5"/>
+<text x="44" y="418" font-family="Helvetica, Arial, sans-serif" font-size="15" text-anchor="start" font-weight="bold" fill="#222">Musician stage name</text>
+<text x="376" y="418" font-family="Helvetica, Arial, sans-serif" font-size="14" text-anchor="end" font-weight="normal" fill="#222">&#9733;&#9733;&#9733;&#9733;&#9733;</text>
+<text x="44" y="442" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="start" font-weight="normal" fill="#555">Review comment text ...</text>
+<text x="44" y="464" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="start" font-weight="normal" fill="#888">date</text>
+<rect x="30" y="490" width="360" height="86" rx="8" fill="none" stroke="#333" stroke-width="1.5"/>
+<text x="44" y="516" font-family="Helvetica, Arial, sans-serif" font-size="15" text-anchor="start" font-weight="bold" fill="#222">Musician stage name</text>
+<text x="376" y="516" font-family="Helvetica, Arial, sans-serif" font-size="14" text-anchor="end" font-weight="normal" fill="#222">&#9733;&#9733;&#9733;&#9733;&#9733;</text>
+<text x="44" y="540" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="start" font-weight="normal" fill="#555">Review comment text ...</text>
+<text x="44" y="562" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="start" font-weight="normal" fill="#888">date</text>
+<rect x="30" y="588" width="360" height="86" rx="8" fill="none" stroke="#333" stroke-width="1.5"/>
+<text x="44" y="614" font-family="Helvetica, Arial, sans-serif" font-size="15" text-anchor="start" font-weight="bold" fill="#222">Musician stage name</text>
+<text x="376" y="614" font-family="Helvetica, Arial, sans-serif" font-size="14" text-anchor="end" font-weight="normal" fill="#222">&#9733;&#9733;&#9733;&#9733;&#9733;</text>
+<text x="44" y="638" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="start" font-weight="normal" fill="#555">Review comment text ...</text>
+<text x="44" y="660" font-family="Helvetica, Arial, sans-serif" font-size="12" text-anchor="start" font-weight="normal" fill="#888">date</text>
+<text x="210.0" y="830" font-family="Helvetica, Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="normal" fill="#555">User Profile page wireframe, Team 012-2</text>
+</svg>

@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="845" viewBox="0 0 420 845">
+<!--
+  Gen AI usage (CSCI 3308 syllabus, "Usage of Gen AI tools"):
+  Tool: Claude (Anthropic), via Claude Code, 2026-10-28.
+  Prompt: "Complete all missing items and document your work properly per course instructions"
+  Response (significant part): Claude generated this SVG with a Python script, based on the
+  team's existing wireframes (home.jpeg, Musicians Profile Page.png, login/register) and the
+  database schema in ProjectSourceCode/src/init_data/create.sql. Reviewed by Seth Ciancio.
+-->
+<title>Create page Wireframe - Team 012-2</title>
+<rect width="420" height="845" fill="#fff"/>
+<rect x="10" y="10" width="400" height="780" rx="14" fill="none" stroke="#333" stroke-width="2"/>
+<text x="36" y="52" font-family="Helvetica, Arial, sans-serif" font-size="15" text-anchor="start" font-weight="normal" fill="#222">&#8592; Back</text>
+<rect x="205" y="33" width="58" height="28" rx="4" fill="none" stroke="#333" stroke-width="1.5"/>
+<text x="234" y="52" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="middle" font-weight="normal" fill="#222">Login</text>
+<rect x="270" y="33" width="58" height="28" rx="4" fill="none" stroke="#333" stroke-width="1.5"/>
+<text x="299" y="52" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="middle" font-weight="normal" fill="#222">Home</text>
+<rect x="335" y="33" width="62" height="28" rx="4" fill="none" stroke="#333" stroke-width="1.5"/>
+<text x="366" y="52" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="middle" font-weight="normal" fill="#222">Profile</text>
+<line x1="10" y1="75" x2="410" y2="75" stroke="#333" stroke-width="1.5"/>
+<line x1="10" y1="720" x2="410" y2="720" stroke="#333" stroke-width="1.5"/>
+<line x1="143" y1="720" x2="143" y2="790" stroke="#333" stroke-width="1.5"/>
+<line x1="277" y1="720" x2="277" y2="790" stroke="#333" stroke-width="1.5"/>
+<text x="76" y="765" font-family="Helvetica, Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="normal" fill="#222">HOME</text>
+<text x="210" y="765" font-family="Helvetica, Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="normal" fill="#222">DISCOVER</text>
+<text x="343" y="765" font-family="Helvetica, Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="bold" fill="#222">CREATE</text>
+<text x="210.0" y="110" font-family="Helvetica, Arial, sans-serif" font-size="22" text-anchor="middle" font-weight="bold" fill="#222">Create / Upload a Song</text>
+<text x="30" y="150" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="start" font-weight="normal" fill="#222">Song title</text>
+<rect x="30" y="158" width="360" height="36" rx="4" fill="none" stroke="#333" stroke-width="1.5"/>
+<text x="30" y="222" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="start" font-weight="normal" fill="#222">Genre (dropdown)</text>
+<rect x="30" y="230" width="360" height="36" rx="4" fill="none" stroke="#333" stroke-width="1.5"/>
+<text x="30" y="294" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="start" font-weight="normal" fill="#222">Description</text>
+<rect x="30" y="302" width="360" height="70" rx="4" fill="none" stroke="#333" stroke-width="1.5"/>
+<text x="30" y="400" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="start" font-weight="normal" fill="#222">Starting price ($)</text>
+<rect x="30" y="408" width="360" height="36" rx="4" fill="none" stroke="#333" stroke-width="1.5"/>
+<text x="30" y="472" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="start" font-weight="normal" fill="#222">Cover image</text>
+<rect x="30" y="480" width="360" height="70" rx="4" fill="none" stroke="#333" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="210.0" y="520" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="middle" font-weight="normal" fill="#888">Drag image here or browse</text>
+<text x="30" y="578" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="start" font-weight="normal" fill="#222">Audio file (.mp3)</text>
+<rect x="30" y="586" width="360" height="50" rx="4" fill="none" stroke="#333" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="210.0" y="616" font-family="Helvetica, Arial, sans-serif" font-size="13" text-anchor="middle" font-weight="normal" fill="#888">Drag audio here or browse</text>
+<rect x="140.0" y="658" width="140" height="38" rx="4" fill="#2b5797" stroke="#333" stroke-width="1.5"/>
+<text x="210.0" y="683" font-family="Helvetica, Arial, sans-serif" font-size="15" text-anchor="middle" font-weight="bold" fill="#fff">Publish</text>
+<text x="210.0" y="830" font-family="Helvetica, Arial, sans-serif" font-size="14" text-anchor="middle" font-weight="normal" fill="#555">Create page wireframe, Team 012-2</text>
+</svg>
