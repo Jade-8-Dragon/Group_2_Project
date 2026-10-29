@@ -63,12 +63,10 @@ Repository root:
 
 We will use a hybrid **Agile** approach for the 4-week project:
 
-- **Kanban board:** a GitHub Projects board with To Do / In Progress / Done columns. Each feature or page is a GitHub issue (user story) assigned to one team member.
+- **Kanban board:** our GitHub Projects board, <https://github.com/users/Setherino/projects/1>, with Todo / In Progress / Done columns. Each feature or page is a GitHub issue (user story) in our repository, picked up by one team member.
 - **Branches and pull requests:** each member works on their own branch and opens a pull request into `main`; another team member reviews and merges it.
 - **Weekly sprint check-in:** at each team meeting we review the board, move finished work to Done, and assign the next week's tasks.
 - **Commit cadence:** each member commits regularly (at least one commit per week, aiming for several days per week).
-
-⚠️ TEAM TO FILL: confirm this matches the board the team set up.
 
 ## 10. Communication Plan
 
@@ -121,4 +119,7 @@ Documented per the CSCI 3308 syllabus ("Usage of Gen AI tools"):
 - **Plan:** No plan was written before this prompt.
 - **Prompt:** "Complete all missing items and document your work properly per course instructions"
 - **Response (significant parts):** Claude drafted this proposal's wording for items 4–7, 9, 12–13 and the extra-credit severities and mitigations, using only what was already in the repo: the README, `create.sql` / `insert.sql`, the team's wireframes, and the risks the team listed in `Meeting_Notes_10-26.txt`. Team number, names and GitHub usernames come from file names and commit history. Team name, emails (first.last@colorado.edu), meeting times, TA contact and invite status were provided by Seth Ciancio. Claude left every team decision it could not verify as "TEAM TO FILL". It also generated `UseCaseDiagram_012-2.svg` and the Discover, Create and User Profile wireframe SVGs with a Python script.
+- **Second prompt (Claude, 2026-10-28):** "Make the github actions board now and document what you did, just use this prompt as the prompt"
+- **Plan:** No plan was written before this prompt.
+- **Response (significant parts):** Claude created the GitHub Projects board <https://github.com/users/Setherino/projects/1> (Todo / In Progress / Done) on Seth's account. It opened issues #8–#19 in the team repository for the remaining project work: Lab 8 (In Progress); genre schema, Express/Handlebars setup, register/login with sessions, Home, Discover, Create, musician profile, user profile, reviews, tests and deployment (Todo). It also added five Done cards for work teammates had already finished, credited by name from the commit history. It updated item 9 of this proposal with the board link.
 - **Reviewed by:** Seth Ciancio. ⚠️ The team should read and correct the drafted sections before submitting.
