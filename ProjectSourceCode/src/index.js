@@ -69,19 +69,29 @@ app.get('/register', (req,res) => {
 });
 
 app.post('/register', async (req, res) => {
-    const hash = await bcrypt.hash(req.body.password, 10);
+    const password = req.body.password;
+
+    // Validate password requirements
+    const specialChar = /[!@#$%^&*(),.?":{}|<>]/;
+    const number = /[0-9]/;
+
+    if (password.length !== 8 || !specialChar.test(password) || !number.test(password)) {
+        return res.status(400).send('Password must be exactly 8 characters long and contain at least one special character and one number.');
+    }
+
+    // Encrypt (hash) password using bcrypt
+    const hash = await bcrypt.hash(password, 10);
 
     //TODO - Add Email Section and Role Section
-    try{
-        await db.none('INSERT INTO users (username, password) VALUES ($1, $2)', 
-        [req.body.username, hash])
+    try {
+        await db.none('INSERT INTO users (username, password) VALUES ($1, $2)',
+        [req.body.username, hash]);
 
         res.redirect('/login');
     }
-    catch{
+    catch {
         res.redirect('/register');
     }
-    
 });
 
 app.get('/login', (req, res) => {
