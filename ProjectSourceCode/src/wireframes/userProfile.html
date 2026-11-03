@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--
+  Gen AI usage (CSCI 3308 syllabus, "Usage of Gen AI tools"): Claude (Anthropic), via Claude Code, 2026-11-02.
+  Prompt: "Write a simple HTML page for the user profile based on the drawing."
+  Response (significant part): Claude wrote this page from the hand-drawn profile wireframe
+  (MilestoneSubmissions/wireframes/profile.jpeg: square avatar on the left, username and bio on the right),
+  with the nav bar from the other team wireframes. Plain Bootstrap 5.3 components, no template copied.
+  Reviewed by Seth Ciancio.
+-->
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Reserve Music | Profile</title>
+
+        <!--Bootstrap Link-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+
+    <body class="bg-light">
+        <!--Nav bar: Back on the left, Login / Home / Profile on the right (same as the other wireframes)-->
+        <nav class="navbar bg-white border-bottom">
+            <div class="container">
+                <a class="btn btn-link text-dark text-decoration-none" href="javascript:history.back()">&larr; Back</a>
+                <div class="d-flex gap-2">
+                    <a class="btn btn-outline-dark" href="/login">Login</a>
+                    <a class="btn btn-outline-dark" href="/">Home</a>
+                    <a class="btn btn-outline-dark" href="/profile">Profile</a>
+                </div>
+            </div>
+        </nav>
+
+        <main class="container my-5">
+            <!--Profile card: avatar left, username + bio right (from profile.jpeg)-->
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <div class="row align-items-center g-4">
+                        <!--Avatar-->
+                        <div class="col-12 col-md-auto text-center">
+                            <img id="avatar" src="https://placehold.co/180x180?text=Avatar"
+                                 alt="Profile picture" class="img-thumbnail" width="180" height="180">
+                        </div>
+
+                        <!--Username and bio-->
+                        <div class="col">
+                            <h1 id="username" class="h2 mb-2">Username</h1>
+                            <p id="bio" class="text-muted mb-0">
+                                Bio goes here. A few sentences about who this user is.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="text-center text-muted py-3">
+            <p class="mb-0">&copy; 2026 Group 2 Project</p>
+        </footer>
+    </body>
+</html>
