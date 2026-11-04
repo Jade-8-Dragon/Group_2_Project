@@ -1,11 +1,11 @@
 -- Insert sample customers and musicians
-INSERT INTO users (username, email, password_hash, user_type)
+INSERT INTO users (username, email, password_hash, user_type, avatar_url)
 VALUES
-    ('Alex Johnson', 'alex@example.com', 'placeholder_hash_1', 'customer'),
-    ('Emily Davis', 'emily@example.com', 'placeholder_hash_2', 'customer'),
-    ('Michael Smith', 'michael@example.com', 'placeholder_hash_3', 'musician'),
-    ('Sarah Wilson', 'sarah@example.com', 'placeholder_hash_4', 'musician'),
-    ('Daniel Brown', 'daniel@example.com', 'placeholder_hash_5', 'musician');
+    ('Alex Johnson', 'alex@example.com', 'placeholder_hash_1', 'customer', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6Ynjy4iPPiK4kwSMrsXcCd_DAyftiF1G2D6PCkZUYbQ&s=10'),
+    ('Emily Davis', 'emily@example.com', 'placeholder_hash_2', 'customer', NULL),
+    ('Michael Smith', 'michael@example.com', 'placeholder_hash_3', 'musician', NULL),
+    ('Sarah Wilson', 'sarah@example.com', 'placeholder_hash_4', 'musician', NULL),
+    ('Daniel Brown', 'daniel@example.com', 'placeholder_hash_5', 'musician', NULL);
 
 
 -- Insert sample reviews

@@ -5,7 +5,8 @@ CREATE TABLE users (
     password_hash VARCHAR(255) NOT NULL,
     user_type VARCHAR(20) NOT NULL
     CHECK (user_type IN ('customer', 'musician')),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    avatar_url TEXT
 );
 
 CREATE TABLE musician_profiles (

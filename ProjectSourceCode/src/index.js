@@ -64,9 +64,61 @@ app.use(
 // *****************************************************
 
 // TODO - Include your API routes here
-app.get('/register', (req,res) => {
-    res.sendFile(path.join(__dirname, 'wireframes', 'register.html'));
+
+//auth middleware
+const auth = (req, res, next) => {
+  if (!req.session.user) {
+    return res.redirect('/login');
+  }
+  next();
+};
+
+
+const pagesDir = path.join(__dirname, '..', 'pages');
+
+app.get('/', (req, res) => res.redirect('/home'));
+
+app.get('/home', (req, res) => {
+    res.sendFile(path.join(pagesDir, 'home.html'));
 });
+
+app.get('/register', (req, res) => {
+    res.sendFile(path.join(pagesDir, 'register_012-2.html'));
+});
+
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(pagesDir, 'login_012-2.html'));
+});
+
+app.get('/profile', auth, (req, res) => {
+    const file = req.session.user.user_type === 'musician'
+        ? 'musicianProfile.html'
+        : 'userProfile.html';
+    res.sendFile(path.join(pagesDir, file));
+});
+
+
+app.get('/api/profile', async (req, res) => {
+    if (!req.session.user) {
+        return res.status(401).json({ error: 'Not logged in' });
+    }
+    try {
+        const profile = await db.oneOrNone(
+            `SELECT u.username, u.email, u.user_type, u.avatar_url,
+                    m.stage_name, m.bio, m.location, m.starting_price
+             FROM users u
+             LEFT JOIN musician_profiles m ON m.user_id = u.user_id
+             WHERE u.user_id = $1`,
+            [req.session.user.user_id]
+        );
+        res.json(profile);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
+
 
 app.post('/register', async (req, res) => {
     const password = req.body.password;
@@ -96,9 +148,7 @@ app.post('/register', async (req, res) => {
     }
 });
 
-app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'wireframes', 'login.html'));
-});
+
 
 app.post('/login', async (req, res) => {
 
@@ -119,13 +169,17 @@ app.post('/login', async (req, res) => {
             return res.status(401).send('Incorrect username/email or password.');
         }
 
-        req.session.user = user;
+        req.session.user = {
+            user_id: user.user_id,
+            username: user.username,
+            user_type: user.user_type,
+        };
 
         req.session.save((error) => {
             if (error) {
                 return res.status(500).send('Session error');
             }
-            res.redirect('/discover');
+            res.redirect('/profile');
         });
     }
     catch (error) {
@@ -134,18 +188,8 @@ app.post('/login', async (req, res) => {
     }
 });
 
-// Authentication Middleware.
-const auth = (req, res, next) => {
-  if (!req.session.user) {
-    // Default to login page.
-    return res.redirect('/login');
-  }
-  next();
-};
 
-app.get('/', (req, res) => {
-    res.redirect('/login');
-});
+
 
 app.get('/logout', auth, (req, res) => {
     req.session.destroy((error) => {
@@ -153,14 +197,11 @@ app.get('/logout', auth, (req, res) => {
             console.error('Logout error:', error);
             return res.status(500).send('Logout failed');
         }
-
-        res.sendFile(path.join(_dirname, '..', 'pages', 'logout.html'));
+        res.sendFile(path.join(pagesDir, 'logout.html'));
     });
 });
 
-app.get('/profile', auth, (req, res) => {
-    res.sendFile(path.join('__dirname', '..', 'pages', 'userProfile_012-2.html'));
-});
+
 
 // *****************************************************
 // <!-- Section 5 : Start Server-->
