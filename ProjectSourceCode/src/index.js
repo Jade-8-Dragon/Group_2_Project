@@ -155,10 +155,12 @@ app.get('/logout', auth, (req, res) => {
             return res.status(500).send('Logout failed');
         }
 
-        res.render('pages/logout', {
-            message: 'Logged out Successfully'
-        });
+        res.sendFile(path.join(_dirname, '..', 'pages', 'logout.html'));
     });
+});
+
+app.get('/profile', auth, (req, res) => {
+    res.sendFile(path.join('__dirname', '..', 'pages', 'userProfile_012-2.html'));
 });
 
 // *****************************************************
