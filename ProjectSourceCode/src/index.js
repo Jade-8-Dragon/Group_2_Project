@@ -75,8 +75,8 @@ app.post('/register', async (req, res) => {
     const specialChar = /[!@#$%^&*(),.?":{}|<>]/;
     const number = /[0-9]/;
 
-    if (password.length !== 8 || !specialChar.test(password) || !number.test(password)) {
-        return res.status(400).send('Password must be exactly 8 characters long and contain at least one special character and one number.');
+    if (password.length < 8 || !specialChar.test(password) || !number.test(password)) {
+        return res.status(400).send('Password must be at least 8 characters long and contain at least one special character and one number.');
     }
 
     // Encrypt (hash) password using bcrypt
