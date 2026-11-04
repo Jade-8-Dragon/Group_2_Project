@@ -79,17 +79,19 @@ app.post('/register', async (req, res) => {
         return res.status(400).send('Password must be at least 8 characters long and contain at least one special character and one number.');
     }
 
-    // Encrypt (hash) password using bcrypt
+    // Hash password using bcrypt
     const hash = await bcrypt.hash(password, 10);
 
-    //TODO - Add Email Section and Role Section
     try {
-        await db.none('INSERT INTO users (username, password) VALUES ($1, $2)',
-        [req.body.username, hash]);
+        await db.none(
+            'INSERT INTO users (username, email, password_hash, user_type) VALUES ($1, $2, $3, $4)',
+            [req.body.username, req.body.email, hash, req.body.role]
+        );
 
         res.redirect('/login');
     }
-    catch {
+    catch (error) {
+        console.error(error);
         res.redirect('/register');
     }
 });
@@ -98,38 +100,35 @@ app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'wireframes', 'login.html'));
 });
 
-app.post('/login', async (req,res) => {
+app.post('/login', async (req, res) => {
 
-    //TODO - Add Email Section
-    try{
-        const user = await db.oneOrNone('SELECT * FROM users WHERE username = $1',
-        [req.body.username]);
+    try {
+        const user = await db.oneOrNone(
+            'SELECT * FROM users WHERE username = $1 OR email = $1',
+            [req.body.username]
+        );
 
-        if(!user)
-        {
-            return res.redirect('/register');
+        if (!user) {
+            return res.status(401).send('Incorrect username/email or password.');
         }
 
-        // check if password from request matches with password in DB
-        const match = await bcrypt.compare(req.body.password, user.password);
+        // Check if password matches stored hash
+        const match = await bcrypt.compare(req.body.password, user.password_hash);
 
-        if (!match)
-        {
-            return res.status(401).send('Incorrect username or password.');
+        if (!match) {
+            return res.status(401).send('Incorrect username/email or password.');
         }
-        
+
         req.session.user = user;
 
         req.session.save((error) => {
-            if(error)
-            {
+            if (error) {
                 return res.status(500).send('Session error');
             }
             res.redirect('/discover');
         });
     }
-    catch (error)
-    {
+    catch (error) {
         console.error(error);
         res.status(500).send('Server error');
     }
