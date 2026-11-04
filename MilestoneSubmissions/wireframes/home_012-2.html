@@ -5,47 +5,118 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Reserve Music</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+<style>
+        /* General Page Styling */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            background-color: white;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            width: 40%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            font-size: 16px;
+        }
+
+        /* Profile Button */
+        .profile-button {
+            position: absolute;
+            right: 20px;
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+            padding: 10px;
+        }
+
+        /* Main Content */
+        .main-content {
+            text-align: center;
+            padding: 40px;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            border-top: 1px solid #ccc;
+
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        /* Bottom Navigation Links */
+        .bottom-nav a {
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+            padding: 10px;
+        }
+
+        .bottom-nav a:hover,
+        .profile-button:hover {
+            color: blue;
+        }
+
+    </style>
+
 </head>
 
 <body>
 
-    <div class="search-container">
-        <input
-            type="text"
-            placeholder="Search..."
-            class="search-bar"
-        >
-    <button class="search-button">🔍</button>
+    <!-- Top Navigation -->
+    <div class="top-nav">
+
+        <!-- Search Bar -->
+        <input type="search" class="search-bar" placeholder="Search...">
+
+        <!-- Profile Button -->
+        <a href="profile.html" class="profile-button">
+            👤 Profile
+        </a>
+
     </div>
 
-    <h1>Welcome Home! Find bands and shows!</h1>
 
-    <p>The buttons below need to take the user to the other pages. 
-    </p>
+    <!-- Main Content -->
+    <div class="main-content">
 
-    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=RDdQw4w9WgXcQ&start_radio=1">DO NOT CLICK</a>
+        <h1>Welcome Home! Find bands and shows!</h1>
 
+        <p>Basic layout of the home page from what the wireframe says.</p>
+
+    </div>
+
+
+    <!-- Bottom Navigation -->
     <nav class="bottom-nav">
 
-        <a href="index.html" class="nav-item">
-            <span>🏠</span>
-            <p>Home</p>
-        </a>
+        <a href="index.html">🏠 Home</a>
 
-        <a href="discover.html" class="nav-item">
-            <span>🔍</span>
-            <p>Discover</p>
-        </a>
+        <a href="discover.html">🔍 Discover</a>
 
-        <a href="create.html" class="nav-item">
-            <span>➕</span>
-            <p>Create</p>
-        </a>
-
-        <a href="profile.html" class="nav-item">
-            <span>👤</span>
-            <p>Profile</p>
-        </a>
+        <a href="create.html">➕ Create</a>
 
     </nav>
 
