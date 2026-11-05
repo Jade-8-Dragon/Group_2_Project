@@ -17,6 +17,75 @@
         <!--Bootstrap Link-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
+    
+    <script>
+    function setText(id, value, fallback) {
+        document.getElementById(id).textContent = value || fallback;
+    }
+
+    async function loadProfile() {
+        try {
+            const res = await fetch('/api/profile');
+            if (res.status === 401) {
+                window.location.href = '/login';
+                return;
+            }
+            const p = await res.json();
+
+            setText('musician-name', p.stage_name || p.username, 'Musician');
+            setText('username', '@' + p.username, '');
+            setText('bio', p.bio, 'No bio yet.');
+            setText('location', p.location, 'Not set');
+            setText('email', p.email, '');
+            // Postgres NUMERIC arrives as a string, so convert before formatting
+            setText('price',
+                p.starting_price != null ? '$' + Number(p.starting_price).toFixed(2) : '',
+                'Not set');
+
+            if (p.avatar_url) {
+                document.getElementById('avatar').src = p.avatar_url;
+            }
+        } catch (err) {
+            console.error('Could not load profile', err);
+        }
+    }
+
+    async function loadReviews() {
+        const box = document.getElementById('reviews');
+        try {
+            const res = await fetch('/api/reviews');
+            if (!res.ok) { box.textContent = 'Could not load reviews.'; return; }
+            const reviews = await res.json();
+
+            box.textContent = '';
+            if (reviews.length === 0) {
+                box.textContent = 'No reviews yet.';
+                return;
+            }
+
+            reviews.forEach(r => {
+                const item = document.createElement('div');
+                item.className = 'border rounded p-3 mb-2';
+
+                const head = document.createElement('strong');
+                head.textContent = r.customer_name + ' · ' + '★'.repeat(r.rating);
+
+                const body = document.createElement('p');
+                body.className = 'mb-0';
+                body.textContent = r.comment || '';
+
+                item.append(head, body);
+                box.appendChild(item);
+            });
+        } catch (err) {
+            console.error('Could not load reviews', err);
+            box.textContent = 'Could not load reviews.';
+        }
+    }
+
+    loadProfile();
+    loadReviews();
+    </script>
 
     <body class="bg-light">
         <!--Nav bar: Back on the left, Login / Home / Profile on the right (same as the other wireframes)-->
@@ -97,6 +166,36 @@
                     <h1 id="musician-name" class="h3 mb-0">Musician Name</h1>
                 </div>
             </div>
+
+                        <!--About + reviews (filled in by the script below)-->
+            <div class="card shadow-sm mt-4">
+                <div class="card-body p-4">
+                    <div class="row align-items-center g-4">
+                        <div class="col-12 col-md-auto text-center">
+                            <img id="avatar" src="https://placehold.co/140x140?text=Avatar"
+                                alt="Profile picture" class="img-thumbnail" width="140" height="140">
+                        </div>
+                        <div class="col">
+                            <p id="username" class="text-muted mb-1"></p>
+                            <p id="bio" class="mb-3"></p>
+                            <ul class="list-unstyled mb-0">
+                                <li><strong>Location:</strong> <span id="location"></span></li>
+                                <li><strong>Starting price:</strong> <span id="price"></span></li>
+                                <li><strong>Email:</strong> <span id="email"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm mt-4">
+                <div class="card-body p-4">
+                    <h2 class="h5">Reviews</h2>
+                    <div id="reviews">Loading...</div>
+                </div>
+            </div>
+
+
         </main>
 
         <footer class="text-center text-muted py-3">
