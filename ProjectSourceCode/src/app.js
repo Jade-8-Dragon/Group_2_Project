@@ -34,8 +34,14 @@ function createApp(db, { sessionSecret } = {}) {
   app.get('/health', (req, res) => res.json({ status: 'ok' }));
   app.get('/register', (req, res) => res.sendFile(path.join(pages, 'register_012-2.html')));
   app.get('/login', (req, res) => res.sendFile(path.join(pages, 'login_012-2.html')));
-  app.get('/discover', requireLogin, (req, res) => res.sendFile(path.join(pages, 'home.html')));
-  app.get('/profile', requireLogin, (req, res) => res.sendFile(path.join(pages, 'userProfile_012-2.html')));
+  app.get('/discover', requireLogin, (req, res) => res.sendFile(path.join(pages, 'home_012-2.html')));
+
+  app.get('/profile', requireLogin, (req, res) => {
+  const file = req.session.user.user_type === 'musician'
+    ? 'musicianProfile_012-2.html'
+    : 'userProfile_012-2.html';
+  res.sendFile(path.join(pages, file));
+});
 
   const requireApiLogin = (req, res, next) => {
     if (!req.session.user) return res.status(401).json({ error: 'Please log in.' });
@@ -43,6 +49,23 @@ function createApp(db, { sessionSecret } = {}) {
   };
 
   app.get('/api/me', requireApiLogin, (req, res) => res.json(req.session.user));
+
+  app.get('/api/profile', requireApiLogin, async (req, res) => {
+  try {
+    const profile = await db.oneOrNone(
+      `SELECT u.username, u.email, u.user_type, u.avatar_url,
+              m.stage_name, m.bio, m.location, m.starting_price
+       FROM users u
+       LEFT JOIN musician_profiles m ON m.user_id = u.user_id
+       WHERE u.user_id = $1`,
+      [req.session.user.user_id]
+    );
+    return res.json(profile);
+  } catch (error) {
+    console.error('Could not load profile:', error.message);
+    return res.status(500).json({ error: 'Could not load profile.' });
+  }
+});
 
   app.get('/api/musicians', requireApiLogin, async (req, res) => {
     try {
@@ -72,9 +95,11 @@ function createApp(db, { sessionSecret } = {}) {
     return res.sendFile(path.join(pages, 'musicianProfile_012-2.html'));
   });
 
-  app.post('/register', async (req, res) => {
+    app.post('/register', async (req, res) => {
     const result = validateRegistration(req.body);
-    if (result.error) return res.status(400).send(result.error);
+    if (result.error) {
+      return res.redirect('/register?error=' + encodeURIComponent(result.error));
+    }
 
     const { username, email, password, role } = result.data;
     try {
@@ -85,15 +110,15 @@ function createApp(db, { sessionSecret } = {}) {
       );
       return res.redirect('/login');
     } catch (error) {
-      if (error.code === '23505') return res.status(409).send('Username or email already registered.');
+      if (error.code === '23505') return res.redirect('/register?error=duplicate');
       console.error('Registration failed:', error.message);
-      return res.status(500).send('Registration failed. Please try again.');
+      return res.redirect('/register?error=server');
     }
   });
 
-  app.post('/login', async (req, res) => {
+    app.post('/login', async (req, res) => {
     const credentials = loginCredentials(req.body);
-    if (!credentials) return res.status(400).send('Enter your username or email and password.');
+    if (!credentials) return res.redirect('/login?error=missing');
 
     try {
       const user = await db.oneOrNone(
@@ -101,25 +126,25 @@ function createApp(db, { sessionSecret } = {}) {
         [credentials.identifier]
       );
       if (!user || !(await bcrypt.compare(credentials.password, user.password_hash))) {
-        return res.status(401).send('Incorrect username/email or password.');
+        return res.redirect('/login?error=invalid');
       }
 
       // Create a fresh session after login; never store the password hash in it.
       req.session.regenerate(error => {
-        if (error) return res.status(500).send('Session error');
+        if (error) return res.redirect('/login?error=server');
         req.session.user = {
           user_id: user.user_id,
           username: user.username,
           user_type: user.user_type,
         };
         req.session.save(saveError => {
-          if (saveError) return res.status(500).send('Session error');
+          if (saveError) return res.redirect('/login?error=server');
           return res.redirect('/discover');
         });
       });
     } catch (error) {
       console.error('Login failed:', error.message);
-      return res.status(500).send('Server error');
+      return res.redirect('/login?error=server');
     }
   });
 
@@ -127,7 +152,7 @@ function createApp(db, { sessionSecret } = {}) {
     req.session.destroy(error => {
       if (error) return res.status(500).send('Logout failed');
       res.clearCookie('connect.sid');
-      return res.sendFile(path.join(pages, 'logout.html'));
+      return res.sendFile(path.join(pages, 'logout_012-2.html'));
     });
   });
   app.get('/welcome', (req, res) => {
