@@ -20,7 +20,7 @@ Weekly minutes, newest first. Each entry records decisions made, alternatives di
 **Date:** Wednesday 11/4/2026, 9:00 AM, Zoom (weekly TA meeting)
 **Attendees:** Jade Lerch, Fio Stepanuga, Misha Oberdorfer, Colin Voress, Cody Murschel, Seth Ciancio, and our TA
 
-## Summary of Meeting
+### Summary of Meeting
 
 -Need to make release notes, with a shown example from TA
 -TA approved of our work for the lab
