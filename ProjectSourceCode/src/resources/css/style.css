@@ -86,30 +86,90 @@
 
 }
 
-
-/*h1{
-    text-align: center;
-    padding-top: 2%;
+/*Login*/
+body.login-page {
+    min-height: 100vh;
+    min-height: 100dvh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
 }
-body {
-    height: 100%;
-    background-color: #f2f2f2;
-  }
-  
-  .event:hover {
-    cursor: pointer;
-  }
-  
-  .hidden {
-    visibility: hidden;
-    height: 0;
-  }
-  
-  #calendar {
-    height: 100vh !important;
-  }
 
-.custom-container {
+.login-main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 64px 20px;
+}
+
+.login-content {
     width: 100%;
-    padding: 20%;
+    max-width: 420px;
+}
+
+#login-header {
+    margin: 0 0 40px;
+    text-align: center;
+}
+
+.login-content .form-label {
+    display: block;
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+.login-content .form-control {
+    width: 100%;
+    padding: 12px;
+}
+
+.login-page #footer {
+    padding: 20px;
+}
+
+/*Register*/
+body.registration-page {
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.registration-main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 64px 20px;
+}
+
+.registration-content {
+    width: 100%;
+    max-width: 420px;
+}
+
+#registration-header {
+    margin-bottom: 32px;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.registration-content .form-label {
+    display: block;
+    text-align: left;
+    margin-bottom: 8px;
+}
+
+.registration-content .form-control {
+    padding: 12px;
+}
+
+.registration-content .account-type-title {
+    font-size: 1.25rem;
+    margin-bottom: 12px;
+}
+
+.registration-page #footer {
+    padding: 20px;
 }
