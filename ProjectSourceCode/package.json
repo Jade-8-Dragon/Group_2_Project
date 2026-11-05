@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
-    "test": "node --test test/*.test.js"
+    "test": "mocha --timeout 10000 \"test/**/*.spec.js\""
   },
   "dependencies": {
     "axios": "^1.21.0",
@@ -19,7 +19,8 @@
     "pg-promise": "^12.7.1"
   },
   "devDependencies": {
-    "chai": "^4.5.0",
-    "mocha": "^10.8.2"
+    "chai": "4.5.0",
+    "chai-http": "4.4.0",
+    "mocha": "10.8.2"
   }
 }

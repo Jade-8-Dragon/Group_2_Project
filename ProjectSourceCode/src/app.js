@@ -130,8 +130,15 @@ function createApp(db, { sessionSecret } = {}) {
       return res.sendFile(path.join(pages, 'logout.html'));
     });
   });
-
+  app.get('/welcome', (req, res) => {
+    res.json({
+      status: 'success',
+      message: 'Welcome!'
+    });
+  });
   return app;
 }
+
+
 
 module.exports = { createApp };
