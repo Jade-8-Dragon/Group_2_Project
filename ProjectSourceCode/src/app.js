@@ -2,6 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
 const path = require('path');
+const { validateRegistration, loginCredentials } = require('./validation');
 
 const pages = path.resolve(__dirname, '..', 'pages');
 const resources = path.join(__dirname, 'resources');
@@ -35,36 +36,50 @@ function createApp(db, { sessionSecret } = {}) {
   app.get('/discover', requireLogin, (req, res) => res.sendFile(path.join(pages, 'home.html')));
   app.get('/profile', requireLogin, (req, res) => res.sendFile(path.join(pages, 'userProfile_012-2.html')));
 
-  // Existing account flow, moved into the Express app so it can be tested.
   app.post('/register', async (req, res) => {
-    const password = req.body.password || '';
-    if (password.length < 8 || !/[!@#$%^&*(),.?":{}|<>]/.test(password) || !/[0-9]/.test(password)) {
-      return res.status(400).send('Password must be at least 8 characters long and contain one special character and one number.');
-    }
+    const result = validateRegistration(req.body);
+    if (result.error) return res.status(400).send(result.error);
 
+    const { username, email, password, role } = result.data;
     try {
       const hash = await bcrypt.hash(password, 10);
-      await db.none('INSERT INTO users (username, email, password_hash, user_type) VALUES ($1, $2, $3, $4)', [
-        req.body.username, req.body.email, hash, req.body.role,
-      ]);
+      await db.none(
+        'INSERT INTO users (username, email, password_hash, user_type) VALUES ($1, $2, $3, $4)',
+        [username, email, hash, role]
+      );
       return res.redirect('/login');
     } catch (error) {
+      if (error.code === '23505') return res.status(409).send('Username or email already registered.');
       console.error('Registration failed:', error.message);
-      return res.status(500).send('Registration failed');
+      return res.status(500).send('Registration failed. Please try again.');
     }
   });
 
   app.post('/login', async (req, res) => {
+    const credentials = loginCredentials(req.body);
+    if (!credentials) return res.status(400).send('Enter your username or email and password.');
+
     try {
-      const identifier = req.body.username || req.body.email;
-      const user = await db.oneOrNone('SELECT * FROM users WHERE username = $1 OR email = $1', [identifier]);
-      if (!user || !(await bcrypt.compare(req.body.password || '', user.password_hash))) {
+      const user = await db.oneOrNone(
+        'SELECT user_id, username, email, user_type, password_hash FROM users WHERE username = $1 OR LOWER(email) = LOWER($1)',
+        [credentials.identifier]
+      );
+      if (!user || !(await bcrypt.compare(credentials.password, user.password_hash))) {
         return res.status(401).send('Incorrect username/email or password.');
       }
-      req.session.user = { user_id: user.user_id, username: user.username, user_type: user.user_type };
-      req.session.save(error => {
+
+      // Create a fresh session after login; never store the password hash in it.
+      req.session.regenerate(error => {
         if (error) return res.status(500).send('Session error');
-        return res.redirect('/discover');
+        req.session.user = {
+          user_id: user.user_id,
+          username: user.username,
+          user_type: user.user_type,
+        };
+        req.session.save(saveError => {
+          if (saveError) return res.status(500).send('Session error');
+          return res.redirect('/discover');
+        });
       });
     } catch (error) {
       console.error('Login failed:', error.message);

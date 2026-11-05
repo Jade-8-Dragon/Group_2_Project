@@ -26,16 +26,16 @@
 
             <form action="/login" method="POST">
 
-                <!--Username-->
+                <!--Username or email-->
                 <div class="mt-3 text-center" id="username-title">
-                    <label for="username">Username:</label>
+                    <label for="username">Username or Email:</label>
                 </div>
                 <div class="mb-3 text-center" id="login-username">
                     <input 
                     type="text" 
                     id="username" 
-                    name="username"
-                    placeholder="Enter Username: "
+                    name="identifier"
+                    placeholder="Enter username or email"
                     required
                     >
                 </div>
@@ -50,20 +50,6 @@
                     id="password"
                     name="password"
                     placeholder="Enter password: "
-                    required
-                    >
-                </div>
-
-                <!--Email-->
-                <div class="mt-3 text-center" id="email-title">
-                    <label for="email">Email: </label>
-                </div>
-                <div class="mb-3 text-center" id="login-email">
-                    <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="Enter Email: "
                     required
                     >
                 </div>
