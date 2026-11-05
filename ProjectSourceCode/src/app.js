@@ -1,0 +1,137 @@
+const express = require('express');
+const session = require('express-session');
+const bcrypt = require('bcryptjs');
+const path = require('path');
+const { validateRegistration, loginCredentials } = require('./validation');
+const { musicianId, listMusicians, findMusician } = require('./musicians');
+
+const pages = path.resolve(__dirname, '..', 'pages');
+const resources = path.join(__dirname, 'resources');
+
+function createApp(db, { sessionSecret } = {}) {
+  if (!sessionSecret) {
+    throw new Error('SESSION_SECRET must be set in the environment');
+  }
+
+  const app = express();
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: false }));
+  app.use('/css', express.static(path.join(resources, 'css')));
+  app.use('/js', express.static(path.join(resources, 'js')));
+  app.use(session({
+    secret: sessionSecret,
+    resave: false,
+    saveUninitialized: false,
+    cookie: { httpOnly: true, sameSite: 'lax' },
+  }));
+
+  const requireLogin = (req, res, next) => {
+    if (!req.session.user) return res.redirect('/login');
+    next();
+  };
+
+  app.get('/', (req, res) => res.redirect(req.session.user ? '/discover' : '/login'));
+  app.get('/health', (req, res) => res.json({ status: 'ok' }));
+  app.get('/register', (req, res) => res.sendFile(path.join(pages, 'register_012-2.html')));
+  app.get('/login', (req, res) => res.sendFile(path.join(pages, 'login_012-2.html')));
+  app.get('/discover', requireLogin, (req, res) => res.sendFile(path.join(pages, 'home.html')));
+  app.get('/profile', requireLogin, (req, res) => res.sendFile(path.join(pages, 'userProfile_012-2.html')));
+
+  const requireApiLogin = (req, res, next) => {
+    if (!req.session.user) return res.status(401).json({ error: 'Please log in.' });
+    next();
+  };
+
+  app.get('/api/me', requireApiLogin, (req, res) => res.json(req.session.user));
+
+  app.get('/api/musicians', requireApiLogin, async (req, res) => {
+    try {
+      const musicians = await listMusicians(db, req.query.search);
+      return res.json(musicians);
+    } catch (error) {
+      console.error('Could not load musicians:', error.message);
+      return res.status(500).json({ error: 'Could not load musicians.' });
+    }
+  });
+
+  app.get('/api/musicians/:id', requireApiLogin, async (req, res) => {
+    const id = musicianId(req.params.id);
+    if (!id) return res.status(400).json({ error: 'Invalid musician ID.' });
+    try {
+      const musician = await findMusician(db, id);
+      if (!musician) return res.status(404).json({ error: 'Musician not found.' });
+      return res.json(musician);
+    } catch (error) {
+      console.error('Could not load musician:', error.message);
+      return res.status(500).json({ error: 'Could not load musician.' });
+    }
+  });
+
+  app.get('/musicians/:id', requireLogin, (req, res) => {
+    if (!musicianId(req.params.id)) return res.status(400).send('Invalid musician ID.');
+    return res.sendFile(path.join(pages, 'musicianProfile_012-2.html'));
+  });
+
+  app.post('/register', async (req, res) => {
+    const result = validateRegistration(req.body);
+    if (result.error) return res.status(400).send(result.error);
+
+    const { username, email, password, role } = result.data;
+    try {
+      const hash = await bcrypt.hash(password, 10);
+      await db.none(
+        'INSERT INTO users (username, email, password_hash, user_type) VALUES ($1, $2, $3, $4)',
+        [username, email, hash, role]
+      );
+      return res.redirect('/login');
+    } catch (error) {
+      if (error.code === '23505') return res.status(409).send('Username or email already registered.');
+      console.error('Registration failed:', error.message);
+      return res.status(500).send('Registration failed. Please try again.');
+    }
+  });
+
+  app.post('/login', async (req, res) => {
+    const credentials = loginCredentials(req.body);
+    if (!credentials) return res.status(400).send('Enter your username or email and password.');
+
+    try {
+      const user = await db.oneOrNone(
+        'SELECT user_id, username, email, user_type, password_hash FROM users WHERE username = $1 OR LOWER(email) = LOWER($1)',
+        [credentials.identifier]
+      );
+      if (!user || !(await bcrypt.compare(credentials.password, user.password_hash))) {
+        return res.status(401).send('Incorrect username/email or password.');
+      }
+
+      // Create a fresh session after login; never store the password hash in it.
+      req.session.regenerate(error => {
+        if (error) return res.status(500).send('Session error');
+        req.session.user = {
+          user_id: user.user_id,
+          username: user.username,
+          user_type: user.user_type,
+        };
+        req.session.save(saveError => {
+          if (saveError) return res.status(500).send('Session error');
+          return res.redirect('/discover');
+        });
+      });
+    } catch (error) {
+      console.error('Login failed:', error.message);
+      return res.status(500).send('Server error');
+    }
+  });
+
+  app.get('/logout', requireLogin, (req, res) => {
+    req.session.destroy(error => {
+      if (error) return res.status(500).send('Logout failed');
+      res.clearCookie('connect.sid');
+      return res.sendFile(path.join(pages, 'logout.html'));
+    });
+  });
+
+  return app;
+}
+
+module.exports = { createApp };

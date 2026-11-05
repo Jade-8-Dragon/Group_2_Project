@@ -1,15 +1,7 @@
-// *****************************************************
-// <!-- Section 1 : Import Dependencies (Done)-->
-// *****************************************************
+require('dotenv').config();
 
-const express = require('express'); // To build an application server or API
-const app = express();
-const path = require('path');
-const pgp = require('pg-promise')(); // To connect to the Postgres DB from the node server
-const bodyParser = require('body-parser');
-const session = require('express-session'); // To set the session object. To store or access session data, use the `req.session`, which is (generally) serialized as JSON by the store.
-const bcrypt = require('bcryptjs'); //  To hash passwords
-const axios = require('axios'); // To make HTTP requests from our server. We'll learn more about it in Part C.
+const pgp = require('pg-promise')();
+const { createApp } = require('./app');
 
 // *****************************************************
 // <!-- Section 2 : Connect to DB (Lowkey Not Done)-->
@@ -203,9 +195,4 @@ app.get('/logout', auth, (req, res) => {
 
 
 
-// *****************************************************
-// <!-- Section 5 : Start Server-->
-// *****************************************************
-// starting the server and keeping the connection open to listen for more requests
-app.listen(3000);
-console.log('Server is listening on port 3000');
+module.exports = app;
