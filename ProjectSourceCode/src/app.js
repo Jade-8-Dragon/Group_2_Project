@@ -3,6 +3,7 @@ const session = require('express-session');
 const bcrypt = require('bcryptjs');
 const path = require('path');
 const { validateRegistration, loginCredentials } = require('./validation');
+const { musicianId, listMusicians, findMusician } = require('./musicians');
 
 const pages = path.resolve(__dirname, '..', 'pages');
 const resources = path.join(__dirname, 'resources');
@@ -35,6 +36,41 @@ function createApp(db, { sessionSecret } = {}) {
   app.get('/login', (req, res) => res.sendFile(path.join(pages, 'login_012-2.html')));
   app.get('/discover', requireLogin, (req, res) => res.sendFile(path.join(pages, 'home.html')));
   app.get('/profile', requireLogin, (req, res) => res.sendFile(path.join(pages, 'userProfile_012-2.html')));
+
+  const requireApiLogin = (req, res, next) => {
+    if (!req.session.user) return res.status(401).json({ error: 'Please log in.' });
+    next();
+  };
+
+  app.get('/api/me', requireApiLogin, (req, res) => res.json(req.session.user));
+
+  app.get('/api/musicians', requireApiLogin, async (req, res) => {
+    try {
+      const musicians = await listMusicians(db, req.query.search);
+      return res.json(musicians);
+    } catch (error) {
+      console.error('Could not load musicians:', error.message);
+      return res.status(500).json({ error: 'Could not load musicians.' });
+    }
+  });
+
+  app.get('/api/musicians/:id', requireApiLogin, async (req, res) => {
+    const id = musicianId(req.params.id);
+    if (!id) return res.status(400).json({ error: 'Invalid musician ID.' });
+    try {
+      const musician = await findMusician(db, id);
+      if (!musician) return res.status(404).json({ error: 'Musician not found.' });
+      return res.json(musician);
+    } catch (error) {
+      console.error('Could not load musician:', error.message);
+      return res.status(500).json({ error: 'Could not load musician.' });
+    }
+  });
+
+  app.get('/musicians/:id', requireLogin, (req, res) => {
+    if (!musicianId(req.params.id)) return res.status(400).send('Invalid musician ID.');
+    return res.sendFile(path.join(pages, 'musicianProfile_012-2.html'));
+  });
 
   app.post('/register', async (req, res) => {
     const result = validateRegistration(req.body);
