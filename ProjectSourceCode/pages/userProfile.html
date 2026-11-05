@@ -17,6 +17,29 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
 
+    <script>
+        async function loadProfile() {
+            try {
+                const res = await fetch('/api/profile');
+                if (res.status === 401) {
+                    window.location.href = '/login';
+                    return;
+                }
+                const p = await res.json();
+
+                document.getElementById('username').textContent = p.stage_name || p.username;
+                document.getElementById('bio').textContent =
+                    p.bio || 'This user has not written a bio yet.';
+                if (p.avatar_url) {
+                    document.getElementById('avatar').src = p.avatar_url;
+                }
+            } catch (err) {
+                console.error('Could not load profile', err);
+            }
+        }
+        loadProfile();
+    </script>
+
     <body class="bg-light">
         <!--Nav bar: Back on the left, Login / Home / Profile on the right (same as the other wireframes)-->
         <nav class="navbar bg-white border-bottom">
