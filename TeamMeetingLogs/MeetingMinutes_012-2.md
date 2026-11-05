@@ -22,14 +22,14 @@ Weekly minutes, newest first. Each entry records decisions made, alternatives di
 
 ### Summary of Meeting
 
--Need to make release notes, with a shown example from TA
--TA approved of our work for the lab
--Everyone went through what they worked on for the past week
--Next steps would be to connect all of our different components together
--Big focus would be bringing everything we have together
--Run up the instance of everything together through Docker
--Maybe have a shell script that runs everything, or all the necessary things
--Meeting up the next day at the lab to talk about planning and finishing work befre break
+- Need to make release notes, with a shown example from TA
+- TA approved of our work for the lab
+- Everyone went through what they worked on for the past week
+- Next steps would be to connect all of our different components together
+- Big focus would be bringing everything we have together
+- Run up the instance of everything together through Docker
+- Maybe have a shell script that runs everything, or all the necessary things
+- Meeting up the next day at the lab to talk about planning and finishing work befre break
 
 ## Week of 10/26/2026
 
