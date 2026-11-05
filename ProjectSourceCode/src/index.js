@@ -1,3 +1,11 @@
+const express = require('express');
+const path = require('path');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const bcrypt = require('bcryptjs');
+
+const app = express();
+
 require('dotenv').config();
 
 const pgp = require('pg-promise')();
@@ -193,6 +201,10 @@ app.get('/logout', auth, (req, res) => {
     });
 });
 
-
-
 module.exports = app;
+
+const port = process.env.PORT || 3000;
+
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Website running at http://localhost:${port}`);
+});
