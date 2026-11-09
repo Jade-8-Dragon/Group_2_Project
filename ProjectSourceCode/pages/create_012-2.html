@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            background-color: white;
+        }
+
+        .search-bar {
+            width: 40%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            font-size: 16px;
+        }
+
+        .profile-button {
+            position: absolute;
+            right: 20px;
+            text-decoration: none;
+            color: black;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .create-container {
+            background-color: white;
+            padding: 25px;
+            margin: 20px auto;
+            width: 70%;
+            border-radius: 10px;
+        }
+
+        input, textarea {
+            width: 90%;
+            padding: 12px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        button {
+            padding: 12px 25px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            border-top: 1px solid #ccc;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+        }
+
+        .bottom-nav a {
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+        }
+
+        .bottom-nav a:hover,
+        .profile-button:hover {
+            color: blue;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Navigation -->
+    <div class="top-nav">
+
+        <input type="search" class="search-bar"
+            placeholder="Search...">
+
+        <a href="profile.html" class="profile-button">
+            👤 Profile
+        </a>
+
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <h1>Create a Post</h1>
+        <p>Create a show or a post for your band!</p>
+
+        <div class="create-container">
+
+            <form>
+
+                <input type="text"
+                    placeholder="Post Title"
+                    required>
+
+                <br>
+
+                <textarea
+                    placeholder="Write your post here..."
+                    required></textarea>
+
+                <br>
+
+                <button type="submit">Publish Post</button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+
+        <a href="home_012-2.html">🏠 Home</a>
+        <a href="discover_012-2.html">🔍 Discover</a>
+        <a href="create_012-2.html">➕ Create</a>
+
+    </nav>
+
+</body>
+</html>
+```
