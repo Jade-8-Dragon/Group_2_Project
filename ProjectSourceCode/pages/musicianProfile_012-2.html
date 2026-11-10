@@ -10,6 +10,7 @@
 -->
 <html lang="en">
     <head>
+        <script src="../src/musicians_profile.js" defer></script>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Reserve Music | Musician</title>
@@ -18,74 +19,6 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     </head>
     
-    <script>
-    function setText(id, value, fallback) {
-        document.getElementById(id).textContent = value || fallback;
-    }
-
-    async function loadProfile() {
-        try {
-            const res = await fetch('/api/profile');
-            if (res.status === 401) {
-                window.location.href = '/login';
-                return;
-            }
-            const p = await res.json();
-
-            setText('musician-name', p.stage_name || p.username, 'Musician');
-            setText('username', '@' + p.username, '');
-            setText('bio', p.bio, 'No bio yet.');
-            setText('location', p.location, 'Not set');
-            setText('email', p.email, '');
-            // Postgres NUMERIC arrives as a string, so convert before formatting
-            setText('price',
-                p.starting_price != null ? '$' + Number(p.starting_price).toFixed(2) : '',
-                'Not set');
-
-            if (p.avatar_url) {
-                document.getElementById('avatar').src = p.avatar_url;
-            }
-        } catch (err) {
-            console.error('Could not load profile', err);
-        }
-    }
-
-    async function loadReviews() {
-        const box = document.getElementById('reviews');
-        try {
-            const res = await fetch('/api/reviews');
-            if (!res.ok) { box.textContent = 'Could not load reviews.'; return; }
-            const reviews = await res.json();
-
-            box.textContent = '';
-            if (reviews.length === 0) {
-                box.textContent = 'No reviews yet.';
-                return;
-            }
-
-            reviews.forEach(r => {
-                const item = document.createElement('div');
-                item.className = 'border rounded p-3 mb-2';
-
-                const head = document.createElement('strong');
-                head.textContent = r.customer_name + ' · ' + '★'.repeat(r.rating);
-
-                const body = document.createElement('p');
-                body.className = 'mb-0';
-                body.textContent = r.comment || '';
-
-                item.append(head, body);
-                box.appendChild(item);
-            });
-        } catch (err) {
-            console.error('Could not load reviews', err);
-            box.textContent = 'Could not load reviews.';
-        }
-    }
-
-    loadProfile();
-    loadReviews();
-    </script>
 
     <body class="bg-light">
         <!--Nav bar: Back on the left, Login / Home / Profile on the right (same as the other wireframes)-->
@@ -177,7 +110,21 @@
                         </div>
                         <div class="col">
                             <p id="username" class="text-muted mb-1"></p>
-                            <p id="bio" class="mb-3"></p>
+                            <div class="mb-3">
+                                <p id="bio" class="mb-2"></p>
+
+                                <div id="bio-editor" class="d-none">
+                                    <textarea id="bio-input" class="form-control mb-2" rows="4" maxlength="500"></textarea>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <button id="bio-save" class="btn btn-sm btn-dark" type="button">Save</button>
+                                        <button id="bio-cancel" class="btn btn-sm btn-outline-secondary" type="button">Cancel</button>
+                                        <small id="bio-count" class="text-muted ms-auto"></small>
+                                    </div>
+                                    <div id="bio-error" class="text-danger small mt-1"></div>
+                                </div>
+
+                                <button id="bio-edit" class="btn btn-sm btn-outline-dark" type="button">Edit bio</button>
+                            </div>
                             <ul class="list-unstyled mb-0">
                                 <li><strong>Location:</strong> <span id="location"></span></li>
                                 <li><strong>Starting price:</strong> <span id="price"></span></li>
