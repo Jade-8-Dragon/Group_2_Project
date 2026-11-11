@@ -96,25 +96,29 @@ function createApp(db, { sessionSecret } = {}) {
   });
 
     app.post('/register', async (req, res) => {
-    const result = validateRegistration(req.body);
-    if (result.error) {
-      return res.redirect('/register?error=' + encodeURIComponent(result.error));
-    }
+  const result = validateRegistration(req.body);
 
-    const { username, email, password, role } = result.data;
-    try {
-        await db.none(
-            'INSERT INTO users (username, email, password_hash, user_type) VALUES ($1, $2, $3, $4)',
-            [req.body.username, req.body.email, hash, req.body.role]
-        );
+  if (result.error) {
+    return res.redirect('/register?error=' + encodeURIComponent(result.error));
+  }
 
-        res.redirect('/login');
-    }
-    catch (error) {
-        console.error(error);
-        res.redirect('/register');
-    }
-  });
+  const { username, email, password, role } = result.data;
+
+  try {
+    const hash = await bcrypt.hash(password, 10);
+
+    await db.none(
+      'INSERT INTO users (username, email, password_hash, user_type) VALUES ($1, $2, $3, $4)',
+      [username, email, hash, role]
+    );
+
+    return res.redirect('/login');
+  } catch (error) {
+    console.error('Registration failed:', error.message);
+
+    return res.redirect('/register?error=server');
+  }
+});
 
     app.post('/login', async (req, res) => {
     const credentials = loginCredentials(req.body);
