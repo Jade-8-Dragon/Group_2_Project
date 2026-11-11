@@ -107,10 +107,7 @@ function createApp(db, { sessionSecret } = {}) {
   });
 
     app.post('/register', async (req, res) => {
-    const result = validateRegistration(req.body);
-    if (result.error) {
-      return res.redirect('/register?error=' + encodeURIComponent(result.error));
-    }
+  const result = validateRegistration(req.body);
 
     const { username, email, password, role } = result.data;
 
