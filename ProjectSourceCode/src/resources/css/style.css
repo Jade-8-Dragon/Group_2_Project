@@ -1,98 +1,129 @@
-/*Home Page*/
-#nav{
-  background-color: #97dde9;
+/*yo dude can u help fill this in and make my page look 
+nice with an orange them and also light purple accents 
+the rest of the stuff that doesnt look good with purple 
+and orange should be white*/
+
+/* =========================
+   GENERAL
+========================= */
+
+:root {
+    --orange: #F97316;
+    --orange-dark: #EA580C;
+    --orange-light: #FFEDD5;
+
+    --purple: #C4B5FD;
+    --purple-light: #F5F3FF;
+
+    --white: #FFFFFF;
+    --text: #29243A;
+    --gray: #6B7280;
 }
 
-/*Login Page*/
-.login-header{
-
+* {
+    box-sizing: border-box;
 }
 
-.username-title{
-
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: var(--white);
+    color: var(--text);
 }
 
-.login-username{
+/* =========================
+   HOME PAGE
+========================= */
 
+#nav {
+    background-color: var(--orange);
+    padding: 16px 30px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
 }
 
-.password-title{
-
+#nav a {
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 600;
+    margin-right: 20px;
 }
 
-.login-password{
-
+#nav a:hover {
+    color: var(--purple-light);
 }
 
-.email-title{
+/* =========================
+   LOGIN PAGE
+========================= */
 
+.login-header,
+#login-header {
+    margin: 0 0 30px;
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: var(--orange-dark);
 }
 
-.login-email{
-
+.username-title,
+.password-title,
+.email-title {
+    display: block;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
 }
 
-.notRegisteredYet{
-
+.login-username,
+.login-password,
+.login-email {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #E5E7EB;
+    border-radius: 10px;
+    background-color: var(--white);
+    margin-bottom: 18px;
+    font-size: 1rem;
 }
 
-/*Registration*/
-.registration-header{
-
+.login-username:focus,
+.login-password:focus,
+.login-email:focus {
+    outline: none;
+    border-color: var(--purple);
+    box-shadow: 0 0 0 3px var(--purple-light);
 }
 
-.username-title{
-
+.notRegisteredYet {
+    text-align: center;
+    margin-top: 22px;
+    color: var(--gray);
 }
 
-.register-username{
-
+.notRegisteredYet a {
+    color: var(--orange-dark);
+    font-weight: 600;
+    text-decoration: none;
 }
 
-.password-title{
-
+.notRegisteredYet a:hover {
+    text-decoration: underline;
 }
 
-.register-password{
+/* Login layout */
 
-}
-
-.email-title{
-
-}
-
-.register-email{
-
-}
-
-.choose-role{
-
-}
-
-.register-email{
-
-}
-
-.alreadyLoggedIn{
-
-}
-
-/*General*/
-.footer{
-
-}
-
-#submit-button{
-
-}
-
-/*Login*/
 body.login-page {
     min-height: 100vh;
     min-height: 100dvh;
     margin: 0;
     display: flex;
     flex-direction: column;
+    background: linear-gradient(
+        135deg,
+        #FFF7ED,
+        #FFFFFF 55%,
+        #F5F3FF
+    );
 }
 
 .login-main {
@@ -106,34 +137,113 @@ body.login-page {
 .login-content {
     width: 100%;
     max-width: 420px;
-}
-
-#login-header {
-    margin: 0 0 40px;
-    text-align: center;
+    background-color: var(--white);
+    padding: 40px;
+    border-radius: 18px;
+    border: 1px solid var(--orange-light);
+    box-shadow: 0 12px 35px rgba(249, 115, 22, 0.10);
 }
 
 .login-content .form-label {
     display: block;
     margin-bottom: 8px;
     text-align: left;
+    font-weight: 600;
 }
 
 .login-content .form-control {
     width: 100%;
     padding: 12px;
+    border: 2px solid #E5E7EB;
+    border-radius: 10px;
 }
 
-.login-page #footer {
-    padding: 20px;
+.login-content .form-control:focus {
+    border-color: var(--purple);
+    box-shadow: 0 0 0 3px var(--purple-light);
+    outline: none;
 }
 
-/*Register*/
+/* =========================
+   REGISTRATION PAGE
+========================= */
+
+.registration-header,
+#registration-header {
+    margin: 0 0 32px;
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: var(--orange-dark);
+}
+
+.register-username,
+.register-password,
+.register-email {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #E5E7EB;
+    border-radius: 10px;
+    background-color: var(--white);
+    margin-bottom: 18px;
+    font-size: 1rem;
+}
+
+.register-username:focus,
+.register-password:focus,
+.register-email:focus {
+    outline: none;
+    border-color: var(--purple);
+    box-shadow: 0 0 0 3px var(--purple-light);
+}
+
+.choose-role {
+    padding: 15px;
+    margin: 20px 0;
+    border: 2px solid var(--purple);
+    border-radius: 12px;
+    background-color: var(--purple-light);
+}
+
+.choose-role label {
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.choose-role input {
+    accent-color: var(--orange);
+}
+
+.alreadyLoggedIn {
+    text-align: center;
+    margin-top: 22px;
+    color: var(--gray);
+}
+
+.alreadyLoggedIn a {
+    color: var(--orange-dark);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.alreadyLoggedIn a:hover {
+    text-decoration: underline;
+}
+
+/* Registration layout */
+
 body.registration-page {
     min-height: 100vh;
+    min-height: 100dvh;
     margin: 0;
     display: flex;
     flex-direction: column;
+    background: linear-gradient(
+        135deg,
+        #FFF7ED,
+        #FFFFFF 55%,
+        #F5F3FF
+    );
 }
 
 .registration-main {
@@ -146,30 +256,122 @@ body.registration-page {
 
 .registration-content {
     width: 100%;
-    max-width: 420px;
-}
-
-#registration-header {
-    margin-bottom: 32px;
-    text-align: center;
-    font-size: 2rem;
+    max-width: 460px;
+    background-color: var(--white);
+    padding: 40px;
+    border-radius: 18px;
+    border: 1px solid var(--orange-light);
+    box-shadow: 0 12px 35px rgba(249, 115, 22, 0.10);
 }
 
 .registration-content .form-label {
     display: block;
     text-align: left;
     margin-bottom: 8px;
+    font-weight: 600;
 }
 
 .registration-content .form-control {
+    width: 100%;
     padding: 12px;
+    border: 2px solid #E5E7EB;
+    border-radius: 10px;
+}
+
+.registration-content .form-control:focus {
+    border-color: var(--purple);
+    box-shadow: 0 0 0 3px var(--purple-light);
+    outline: none;
 }
 
 .registration-content .account-type-title {
     font-size: 1.25rem;
     margin-bottom: 12px;
+    color: var(--orange-dark);
 }
 
-.registration-page #footer {
+/* =========================
+   BUTTONS
+========================= */
+
+#submit-button {
+    display: block;
+    width: 100%;
+    padding: 13px 20px;
+    margin-top: 20px;
+
+    background-color: var(--orange);
+    color: var(--white);
+
+    border: none;
+    border-radius: 10px;
+
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+
+    transition: background-color 0.2s,
+                transform 0.2s,
+                box-shadow 0.2s;
+}
+
+#submit-button:hover {
+    background-color: var(--orange-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(249, 115, 22, 0.25);
+}
+
+#submit-button:active {
+    transform: translateY(0);
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer,
+#footer {
     padding: 20px;
+    text-align: center;
+    background-color: var(--white);
+    color: var(--gray);
+    border-top: 2px solid var(--purple-light);
+    font-size: 0.9rem;
+}
+
+.footer a,
+#footer a {
+    color: var(--orange-dark);
+    text-decoration: none;
+}
+
+.footer a:hover,
+#footer a:hover {
+    text-decoration: underline;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 500px) {
+    .login-main,
+    .registration-main {
+        padding: 30px 15px;
+    }
+
+    .login-content,
+    .registration-content {
+        padding: 25px;
+        border-radius: 14px;
+    }
+
+    #login-header,
+    #registration-header {
+        font-size: 1.8rem;
+    }
+
+    #nav {
+        padding: 15px;
+    }
 }
