@@ -179,6 +179,22 @@ function createApp(db, { sessionSecret } = {}) {
     }
   });
 
+  app.get('/api/reviews', requireApiLogin, async (req, res) => {
+    try {
+      const reviews = await db.any(
+        `SELECT u.username AS customer_name, r.rating, r.comment
+         FROM reviews r
+         JOIN users u ON u.user_id = r.customer_id
+         WHERE r.musician_id = $1
+         ORDER BY r.created_at DESC`,
+        [req.session.user.user_id]
+      );
+      return res.json(reviews);
+    } catch (error) {
+      console.error('Could not load reviews:', error.message);
+      return res.status(500).json({ error: 'Could not load reviews.' });
+    }
+  });
   
 
   app.get('/logout', requireLogin, (req, res) => {
