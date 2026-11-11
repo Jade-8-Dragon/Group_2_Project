@@ -106,12 +106,10 @@ function createApp(db, { sessionSecret } = {}) {
     return res.sendFile(path.join(pages, 'musicianProfile_012-2.html'));
   });
 
-
-  app.post('/register', async (req, res) => {
+    app.post('/register', async (req, res) => {
     const result = validateRegistration(req.body);
-
     if (result.error) {
-      return res.redirect('/register?error=invalid');
+      return res.redirect('/register?error=' + encodeURIComponent(result.error));
     }
 
     const { username, email, password, role } = result.data;
@@ -141,7 +139,7 @@ function createApp(db, { sessionSecret } = {}) {
 
   app.post('/login', async (req, res) => {
     const credentials = loginCredentials(req.body);
-    if (!credentials) return res.status(400).send('Enter your username or email and password.');
+    if (!credentials) return res.redirect('/login?error=missing');
 
     try {
       const user = await db.oneOrNone(
@@ -149,24 +147,24 @@ function createApp(db, { sessionSecret } = {}) {
         [credentials.identifier]
       );
       if (!user || !(await bcrypt.compare(credentials.password, user.password_hash))) {
-        return res.status(401).send('Incorrect username/email or password.');
+        return res.redirect('/login?error=invalid');
       }
 
       req.session.regenerate(error => {
-        if (error) return res.status(500).send('Session error');
+        if (error) return res.redirect('/login?error=server');
         req.session.user = {
           user_id: user.user_id,
           username: user.username,
           user_type: user.user_type,
         };
         req.session.save(saveError => {
-          if (saveError) return res.status(500).send('Session error');
+          if (saveError) return res.redirect('/login?error=server');
           return res.redirect('/discover');
         });
       });
     } catch (error) {
       console.error('Login failed:', error.message);
-      return res.status(500).send('Server error');
+      return res.redirect('/login?error=server');
     }
   });
 
@@ -174,7 +172,7 @@ function createApp(db, { sessionSecret } = {}) {
     req.session.destroy(error => {
       if (error) return res.status(500).send('Logout failed');
       res.clearCookie('connect.sid');
-      return res.sendFile(path.join(pages, 'logout.html'));
+      return res.sendFile(path.join(pages, 'logout_012-2.html'));
     });
   });
   app.get('/welcome', (req, res) => {
