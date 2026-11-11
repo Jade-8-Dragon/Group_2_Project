@@ -67,6 +67,26 @@ function createApp(db, { sessionSecret } = {}) {
     }
   });
 
+  app.patch('/api/profile', requireApiLogin, async (req, res) => {
+    const bio = typeof req.body.bio === 'string' ? req.body.bio.trim() : null;
+    if (bio === null) return res.status(400).json({ error: 'Bio must be text.' });
+    if (bio.length > 500) {
+      return res.status(400).json({ error: 'Bio must be 500 characters or less.' });
+    }
+
+    try {
+      const updated = await db.oneOrNone(
+        'UPDATE musician_profiles SET bio = $1 WHERE user_id = $2 RETURNING bio',
+        [bio, req.session.user.user_id]
+      );
+      if (!updated) return res.status(404).json({ error: 'Musician profile not found.' });
+      return res.json({ bio: updated.bio });
+    } catch (error) {
+      console.error('Could not save bio:', error.message);
+      return res.status(500).json({ error: 'Could not save bio.' });
+    }
+  });
+
   app.get('/api/musicians', requireApiLogin, async (req, res) => {
     try {
       const musicians = await listMusicians(db, req.query.search);
@@ -107,10 +127,18 @@ function createApp(db, { sessionSecret } = {}) {
   try {
     const hash = await bcrypt.hash(password, 10);
 
-    await db.none(
-      'INSERT INTO users (username, email, password_hash, user_type) VALUES ($1, $2, $3, $4)',
-      [username, email, hash, role]
-    );
+    await db.tx(async t => {
+      const user = await t.one(
+        `INSERT INTO users (username, email, password_hash, user_type)
+         VALUES ($1, $2, $3, $4)
+         RETURNING user_id`,
+        [username, email, hash, role]
+      );
+
+      if (role === 'musician') {
+        await t.none('INSERT INTO musician_profiles (user_id) VALUES ($1)', [user.user_id]);
+      }
+    });
 
     return res.redirect('/login');
   } catch (error) {
@@ -150,6 +178,8 @@ function createApp(db, { sessionSecret } = {}) {
       return res.redirect('/login?error=server');
     }
   });
+
+  
 
   app.get('/logout', requireLogin, (req, res) => {
     req.session.destroy(error => {
