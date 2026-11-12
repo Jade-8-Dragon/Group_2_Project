@@ -15,7 +15,7 @@ Weekly minutes, newest first. Each entry records decisions made, alternatives di
   renamed notes file.
 -->
 
-
+## Week of 11/11/2026
 **Date:** Wednesday 11/11/2026, 9:00 AM, Zoom (weekly TA meeting)  
 **Attendees:** Jade Lerch, Fio Stepanuga, Misha Oberdorfer, Colin Voress, Cody Murschel, Seth Ciancio, and our TA
 
