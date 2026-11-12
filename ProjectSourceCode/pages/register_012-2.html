@@ -15,112 +15,103 @@
         <link rel="stylesheet" href="css/style.css">  
     </head>
 
-    <body>
-        <main>
+    <body class="registration-page">
+        <main class="registration-main">
             <!--Please configure wording once website name is figured out(NOT DONE)-->
-            <div class="text-center mb-3" id="registration-header">
-                <h1>Register for Reserve Music</h2>
-            </div>
+            <div class="registration-content">
+                <h1 id="registration-header">Register for Reserve Music</h1>
+                
 
-            <form action="/register" method="POST">
-
-                <!--Username-->
-                <div class="mt-3 text-center" id="username-title">
-                    <label for="username">Username: </label>
-                </div>
-                <div class="mb-3 text-center" id="register-username">
-                    <input 
-                    type="text"
-                    id ="username"
-                    name="username"
-                    placeholder="Enter Username: "
-                    required
-                    >
-                </div>
-
-                <!--Password-->
-                <div class="mt-3 text-center" id="password-title">
-                    <label for="password">Password: </label>
-                </div>
-                <div class="mb-3 text-center" id="register-password">
-                    <input 
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="Enter Password: "
-                    required
-                    >
-                </div>
-
-                <div class="mt-3 text-center" id="email-title">
-                    <label for="email">Email: </label>
-                </div>
-                <div class="mb-3 text-center" id="register-email">
-                    <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    placeholder="Enter Email: "
-                    required
-                    >
-                </div>
-
-                <div class="mt-3 text-center" id="choose-role">
-                    <h2>Choose your account type:</h2>
-                </div>
-                <div class="text-center">
-                    <div class="btn-group mb-3" role="group" aria-label="Choose your role" id="register-email">
-                        <div>
-                            <input 
-                            type="radio"
-                            class="btn-check"
-                            name="role"
-                            id="customer"
-                            value="customer"
+                <form action="/register" method="POST">
+                    <!--Username-->
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username: </label>
+                        <input 
+                            type="text"
+                            class="form-control"
+                            id ="username"
+                            name="username"
+                            placeholder="Enter Username: "
+                            autocomplete="username"
                             required
+                        >
+                    </div>
+
+                    <!--Password-->
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password: </label>
+                        <input 
+                            type="password"
+                            class="form-control"
+                            id="password"
+                            name="password"
+                            placeholder="Enter Password: "
+                            autocomplete="new-password"
+                            required
+                        >
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="email" class="form-label">Email: </label>
+                        <input
+                            type="email"
+                            class="form-control"
+                            id="email"
+                            name="email"
+                            placeholder="Enter Email: "
+                            autocomplete="email"
+                            required
+                        >
+                    </div>
+
+                    <fieldset class="mb-4 text-center">
+                        <legend class="account-type-title">
+                            Choose your account type:
+                        </legend>
+
+                        <div class="btn-group">
+                            <input 
+                                type="radio"
+                                class="btn-check"
+                                name="role"
+                                id="customer"
+                                value="customer"
+                                required
                             >
-                            <label 
-                            class="btn btn-outline-primary" 
-                            for="customer"
-                            >Customer</label>
-                        </div>
-                        
-                        <div>
-                            <input
+                        <label class="btn btn-outline-primary" for="customer">
+                            Customer
+                        </label>
+                        <input
                             type="radio"
                             class="btn-check"
                             name="role"
                             id="musician"
                             value="musician"
                             required
-                            >
-                            <label 
-                            class="btn btn-outline-primary" 
-                            for="musician"
-                            >Musician</label>
-                        </div>
+                        >
+                        <label class="btn btn-outline-primary" for="musician">
+                            Musician
+                        </label>
                     </div>
-                </div>
+                </fieldset>
 
-                <div class="mb-3 text-center" class="submit-button">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-            </form>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">
+                            Submit
+                        </button>
+                    </div>
+                </form>
 
-            <!--ADD A LOGIN REDIRECT LINK-->
-            <div class="mt-3 text-center" id="alreadyLoggedIn">
-                <p>Have an account?</p>
-                <a href="/login">Login Here</a>
+                <!--ADD A LOGIN REDIRECT LINK-->
+                <div class="mt-4 text-center" id="alreadyLoggedIn">
+                    <p class="mb-2">Have an account?</p>
+                    <a href="/login">Login Here</a>
+                </div>
             </div>
         </main>
         
-        
-
-            <!--Configure(NOT DONE)-->
-            <div class="mt-3" id="footer">
-                <footer>
-                    <p>© 2026 Group 2 Project</p>
-                </footer>
-            </div>
+        <footer id="footer">
+            <p class="mb-0">© 2026 Group 2 Project</p>
+        </footer>
     </body>
 </html>

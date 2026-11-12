@@ -15,65 +15,65 @@
         <link rel="stylesheet" href="css/style.css">
     </head>
 
-    <body>
-        <!--Please configure wording once website name is figured out(NOT DONE)-->
+    <body class="login-page">
         <!--Main Content-->
-        <main>
+        <main class="login-main">
             <!--Please configure wording once website name is figured out(NOT DONE)-->
-            <div class="text-center mb-3" id="login-header">
-                <h2>Reserve Music Login</h2>
+            <div class="login-content">
+                <h2 id="login-header">Reserve Music Login</h2>
+
+                <form action="/login" method="POST">
+                    <!--Username or email-->
+                    <div class="mb-4 text-center" id="username-title">
+                        <label for="username" class="form-label">
+                            Username or Email:
+                        </label>
+                        <input 
+                            class="form-control"
+                            type="text" 
+                            id="username" 
+                            name="identifier"
+                            placeholder="Enter username or email"
+                            autocomplete="username"
+                            required
+                        >
+                    </div>
+
+                    <!--Password-->
+                    <div class="mt-3 text-center" id="password-title">
+                        <label for="password">
+                            Password:
+                        </label>
+                        <input 
+                            class="form-control"
+                            type="password" 
+                            id="password"
+                            name="password"
+                            placeholder="Enter password: "
+                            autocomplete="current-password"
+                            required
+                        >
+                    </div>
+
+                    <!--Submit Button-->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary px-4">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+
+                <div class="mt-3 text-center" id="notRegisteredYet">
+                    <p class="mb-2">Don't have an account?</p>
+                    <a href="/register">Register Here</a>
+                </div>
             </div>
-
-            <form action="/login" method="POST">
-
-                <!--Username or email-->
-                <div class="mt-3 text-center" id="username-title">
-                    <label for="username">Username or Email:</label>
-                </div>
-                <div class="mb-3 text-center" id="login-username">
-                    <input 
-                    type="text" 
-                    id="username" 
-                    name="identifier"
-                    placeholder="Enter username or email"
-                    required
-                    >
-                </div>
-
-                <!--Password-->
-                <div class="mt-3 text-center" id="password-title">
-                    <label for="password">Password:</label>
-                </div>
-                <div class="mb-3 text-center" id="login-password">
-                    <input 
-                    type="password" 
-                    id="password"
-                    name="password"
-                    placeholder="Enter password: "
-                    required
-                    >
-                </div>
-
-                <!--Submit Button-->
-                <div class="mb-3 text-center" class="submit-button">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-
-            </form>
         </main>
 
-        <!--ADD A REGISTRATION REDIRECT LINK
-        If the login fails 3 times send the user to registration page
-        -->
-        <div class="mt-3 text-center" id="notRegisteredYet">
-            <p>Don't have an account?</p>
-            <a href="/register">Register Here</a>
-        </div>
-
         <!--Configure(NOT DONE)-->
-        <div class="mt-3" id="footer">
+        <div id="footer">
             <footer>
-                <p>© 2026 Group 2 Project</p>
+                <p class="mb-0">© 2026 Group 2 Project</p>
             </footer>
         </div>
     </body>
