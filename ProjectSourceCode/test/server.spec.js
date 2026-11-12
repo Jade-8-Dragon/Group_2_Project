@@ -70,20 +70,24 @@ describe('POST /register (integration tests)', () => {
     expect(await bcrypt.compare(validUser.password, rows[0].password_hash)).to.equal(true);
   });
 
+
   it('rejects a missing password without creating a user', async () => {
     const { password, ...invalidUser } = validUser;
+
     const res = await chai.request(app)
       .post('/register')
+      .redirects(0)
       .type('form')
       .send(invalidUser);
 
-    expect(res).to.have.status(400);
-    expect(res.text).to.include('Password');
+    expect(res).to.have.status(302);
+    expect(res.headers.location).to.match(/^\/register\?error=/);
 
     const rows = await db.any(
       'SELECT user_id FROM users WHERE username = $1',
       [username]
     );
+
     expect(rows).to.have.lengthOf(0);
   });
 });
