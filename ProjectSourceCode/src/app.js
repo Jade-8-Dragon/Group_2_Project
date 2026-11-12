@@ -34,8 +34,19 @@ function createApp(db, { sessionSecret } = {}) {
   app.get('/health', (req, res) => res.json({ status: 'ok' }));
   app.get('/register', (req, res) => res.sendFile(path.join(pages, 'register_012-2.html')));
   app.get('/login', (req, res) => res.sendFile(path.join(pages, 'login_012-2.html')));
-  app.get('/discover', requireLogin, (req, res) => res.sendFile(path.join(pages, 'home_012-2.html')));
-  app.get('/home', requireLogin, (req, res) => res.redirect('/discover'));
+
+  app.get('/home', requireLogin, (req, res) => {
+    res.sendFile(path.join(pages, 'home_012-2.html'));
+  });
+
+  app.get('/discover', requireLogin, (req, res) => {
+    res.sendFile(path.join(pages, 'discover_012-2.html'));
+  });
+
+  app.get('/create', requireLogin, (req, res) => {
+    res.sendFile(path.join(pages, 'create_012-2.html'));
+  });
+
   app.get('/profile', requireLogin, (req, res) => {
     const file = req.session.user.user_type === 'musician'
       ? 'musicianProfile_012-2.html'
@@ -118,14 +129,17 @@ function createApp(db, { sessionSecret } = {}) {
     app.post('/register', async (req, res) => {
   const result = validateRegistration(req.body);
 
-  if (result.error) {
-    return res.redirect('/register?error=' + encodeURIComponent(result.error));
-  }
+    const { username, email, password, role } = result.data;
 
-  const { username, email, password, role } = result.data;
+    try {
+      const hash = await bcrypt.hash(password, 10);
 
-  try {
-    const hash = await bcrypt.hash(password, 10);
+      await db.none(
+        `INSERT INTO users
+       (username, email, password_hash, user_type)
+       VALUES ($1, $2, $3, $4)`,
+        [username, email, hash, role]
+      );
 
     await db.tx(async t => {
       const user = await t.one(
@@ -140,15 +154,18 @@ function createApp(db, { sessionSecret } = {}) {
       }
     });
 
-    return res.redirect('/login');
-  } catch (error) {
-    console.error('Registration failed:', error.message);
+    } catch (error) {
+      if (error.code === '23505') {
+        return res.redirect('/register?error=exists');
+      }
 
-    return res.redirect('/register?error=server');
-  }
-});
+      console.error('Registration failed:', error.message);
+      return res.redirect('/register?error=server');
+    }
+  });
 
-    app.post('/login', async (req, res) => {
+
+  app.post('/login', async (req, res) => {
     const credentials = loginCredentials(req.body);
     if (!credentials) return res.redirect('/login?error=missing');
 
@@ -210,9 +227,25 @@ function createApp(db, { sessionSecret } = {}) {
       message: 'Welcome!'
     });
   });
+
+
+  app.get('/home_012-2.html', (req, res) => {
+    res.redirect('/home');
+  });
+
+  app.get('/discover_012-2.html', (req, res) => {
+    res.redirect('/discover');
+  });
+
+  app.get('/create_012-2.html', (req, res) => {
+    res.redirect('/create');
+  });
+
+  app.get('/profile.html', (req, res) => {
+    res.redirect('/profile');
+  });
+
   return app;
 }
-
-
 
 module.exports = { createApp };

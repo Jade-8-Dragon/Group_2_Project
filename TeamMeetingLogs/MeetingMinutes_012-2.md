@@ -15,6 +15,31 @@ Weekly minutes, newest first. Each entry records decisions made, alternatives di
   renamed notes file.
 -->
 
+## Week of 11/11/2026
+**Date:** Wednesday 11/11/2026, 9:00 AM, Zoom (weekly TA meeting)  
+**Attendees:** Jade Lerch, Fio Stepanuga, Misha Oberdorfer, Colin Voress, Cody Murschel, Seth Ciancio, and our TA
+
+### Summary of Meeting
+
+- TA reviewed remaining testing requirements and reminded us to complete all four tests, including the outstanding POST request test.
+- Need to complete UAT documentation using the TA's lab documentation and slides.
+- Everyone shared updates on their progress from the past week.
+- Colin fixed dependency/version issues and login/registration bugs involving bcrypt.
+- Jade worked on registration, Express routes, and error handling.
+- Team discussed making the Discover page functional with artist listings and continuing work on user profiles.
+- Tomorrow's lab will be dedicated project work time rather than deployment.
+- Need to finish major functionality before Thanksgiving break.
+
+### Follow-up items (owner)
+
+- Complete remaining tests and UAT documentation. (Jade and team members)
+- Finish Discover and Create page functionality. (Cody, Jade, and team)
+- Continue profile bio and profile picture editing. (Fio)
+- Write release notes. (Seth)
+- Submit repository link to Canvas. (Jade)
+- Update meeting notes. (Colin)
+- Ensure everyone has at least three commits. (all)
+
 ## Week Of 11/4/2026
 
 **Date:** Wednesday 11/4/2026, 9:00 AM, Zoom (weekly TA meeting)
