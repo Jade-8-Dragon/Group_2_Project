@@ -126,7 +126,7 @@ function createApp(db, { sessionSecret } = {}) {
     return res.sendFile(path.join(pages, 'musicianProfile_012-2.html'));
   });
 
-  app.post('/register', async (req, res) => {
+    app.post('/register', async (req, res) => {
     const result = validateRegistration(req.body);
     if (result.error) {
       return res.redirect('/register?error=' + encodeURIComponent(result.error));
