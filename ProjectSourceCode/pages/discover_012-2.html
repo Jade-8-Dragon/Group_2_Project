@@ -83,8 +83,14 @@
     <!-- Top Navigation -->
     <div class="top-nav">
 
-        <input type="search" class="search-bar"
-            placeholder="Search...">
+        <input
+            type="search"
+            class="search-bar"
+            id="musician-search"
+            placeholder="Search musicians..."
+        >
+
+        <button id="search-button">Search</button>
 
         <a href="profile.html" class="profile-button">
             👤 Profile
@@ -96,12 +102,16 @@
     <div class="main-content">
 
         <h1>Discover</h1>
-        <p>Explore active bands and shows!</p>
+        <p>Explore active bands and musicians!</p>
 
         <div class="category">
-            <h2>Popular</h2>
-            <p>Check out popular content.</p>
+            <h2>Musicians</h2>
+
+            <!-- JavaScript will insert musician cards here -->
+            <div id="musician-list"></div>
         </div>
+
+    </div>
 
         <div class="category">
             <h2>Recently Added</h2>
@@ -117,13 +127,13 @@
 
     <!-- Bottom Navigation -->
     <nav class="bottom-nav">
-
-        <a href="home_012-2.html">🏠 Home</a>
-        <a href="discover_012-2.html">🔍 Discover</a>
-        <a href="create_012-2.html">➕ Create</a>
+        <a href="/home">🏠 Home</a>
+        <a href="/discover">🔍 Discover</a>
+        <a href="/create">➕ Create</a>
 
     </nav>
 
+    <script src="/js/discover.js"></script>
 </body>
 </html>
 ```

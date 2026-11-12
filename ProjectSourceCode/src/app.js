@@ -34,8 +34,19 @@ function createApp(db, { sessionSecret } = {}) {
   app.get('/health', (req, res) => res.json({ status: 'ok' }));
   app.get('/register', (req, res) => res.sendFile(path.join(pages, 'register_012-2.html')));
   app.get('/login', (req, res) => res.sendFile(path.join(pages, 'login_012-2.html')));
-  app.get('/discover', requireLogin, (req, res) => res.sendFile(path.join(pages, 'home_012-2.html')));
-  app.get('/home', requireLogin, (req, res) => res.redirect('/discover'));
+
+  app.get('/home', requireLogin, (req, res) => {
+    res.sendFile(path.join(pages, 'home_012-2.html'));
+  });
+
+  app.get('/discover', requireLogin, (req, res) => {
+    res.sendFile(path.join(pages, 'discover_012-2.html'));
+  });
+
+  app.get('/create', requireLogin, (req, res) => {
+    res.sendFile(path.join(pages, 'create_012-2.html'));
+  });
+
   app.get('/profile', requireLogin, (req, res) => {
     const file = req.session.user.user_type === 'musician'
       ? 'musicianProfile_012-2.html'
@@ -64,6 +75,26 @@ function createApp(db, { sessionSecret } = {}) {
     } catch (error) {
       console.error('Could not load profile:', error.message);
       return res.status(500).json({ error: 'Server error' });
+    }
+  });
+
+  app.patch('/api/profile', requireApiLogin, async (req, res) => {
+    const bio = typeof req.body.bio === 'string' ? req.body.bio.trim() : null;
+    if (bio === null) return res.status(400).json({ error: 'Bio must be text.' });
+    if (bio.length > 500) {
+      return res.status(400).json({ error: 'Bio must be 500 characters or less.' });
+    }
+
+    try {
+      const updated = await db.oneOrNone(
+        'UPDATE musician_profiles SET bio = $1 WHERE user_id = $2 RETURNING bio',
+        [bio, req.session.user.user_id]
+      );
+      if (!updated) return res.status(404).json({ error: 'Musician profile not found.' });
+      return res.json({ bio: updated.bio });
+    } catch (error) {
+      console.error('Could not save bio:', error.message);
+      return res.status(500).json({ error: 'Could not save bio.' });
     }
   });
 
@@ -98,29 +129,43 @@ function createApp(db, { sessionSecret } = {}) {
     app.post('/register', async (req, res) => {
   const result = validateRegistration(req.body);
 
-  if (result.error) {
-    return res.redirect('/register?error=' + encodeURIComponent(result.error));
-  }
+    const { username, email, password, role } = result.data;
 
-  const { username, email, password, role } = result.data;
+    try {
+      const hash = await bcrypt.hash(password, 10);
 
-  try {
-    const hash = await bcrypt.hash(password, 10);
+      await db.none(
+        `INSERT INTO users
+       (username, email, password_hash, user_type)
+       VALUES ($1, $2, $3, $4)`,
+        [username, email, hash, role]
+      );
 
-    await db.none(
-      'INSERT INTO users (username, email, password_hash, user_type) VALUES ($1, $2, $3, $4)',
-      [username, email, hash, role]
-    );
+    await db.tx(async t => {
+      const user = await t.one(
+        `INSERT INTO users (username, email, password_hash, user_type)
+         VALUES ($1, $2, $3, $4)
+         RETURNING user_id`,
+        [username, email, hash, role]
+      );
 
-    return res.redirect('/login');
-  } catch (error) {
-    console.error('Registration failed:', error.message);
+      if (role === 'musician') {
+        await t.none('INSERT INTO musician_profiles (user_id) VALUES ($1)', [user.user_id]);
+      }
+    });
 
-    return res.redirect('/register?error=server');
-  }
-});
+    } catch (error) {
+      if (error.code === '23505') {
+        return res.redirect('/register?error=exists');
+      }
 
-    app.post('/login', async (req, res) => {
+      console.error('Registration failed:', error.message);
+      return res.redirect('/register?error=server');
+    }
+  });
+
+
+  app.post('/login', async (req, res) => {
     const credentials = loginCredentials(req.body);
     if (!credentials) return res.redirect('/login?error=missing');
 
@@ -151,6 +196,24 @@ function createApp(db, { sessionSecret } = {}) {
     }
   });
 
+  app.get('/api/reviews', requireApiLogin, async (req, res) => {
+    try {
+      const reviews = await db.any(
+        `SELECT u.username AS customer_name, r.rating, r.comment
+         FROM reviews r
+         JOIN users u ON u.user_id = r.customer_id
+         WHERE r.musician_id = $1
+         ORDER BY r.created_at DESC`,
+        [req.session.user.user_id]
+      );
+      return res.json(reviews);
+    } catch (error) {
+      console.error('Could not load reviews:', error.message);
+      return res.status(500).json({ error: 'Could not load reviews.' });
+    }
+  });
+  
+
   app.get('/logout', requireLogin, (req, res) => {
     req.session.destroy(error => {
       if (error) return res.status(500).send('Logout failed');
@@ -164,9 +227,25 @@ function createApp(db, { sessionSecret } = {}) {
       message: 'Welcome!'
     });
   });
+
+
+  app.get('/home_012-2.html', (req, res) => {
+    res.redirect('/home');
+  });
+
+  app.get('/discover_012-2.html', (req, res) => {
+    res.redirect('/discover');
+  });
+
+  app.get('/create_012-2.html', (req, res) => {
+    res.redirect('/create');
+  });
+
+  app.get('/profile.html', (req, res) => {
+    res.redirect('/profile');
+  });
+
   return app;
 }
-
-
 
 module.exports = { createApp };
