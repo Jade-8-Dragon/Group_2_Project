@@ -377,3 +377,30 @@ body.registration-page {
         padding: 15px;
     }
 }
+
+/* Give the cards an orange-to-purple border */
+.login-content,
+.registration-content {
+    border: 2px solid transparent;
+    background:
+        linear-gradient(white, white) padding-box,
+        linear-gradient(135deg, var(--orange), var(--purple)) border-box;
+}
+
+/* Clear keyboard focus */
+#submit-button:focus-visible,
+#nav a:focus-visible {
+    outline: 3px solid var(--text);
+    outline-offset: 4px;
+}
+
+/* Let navigation wrap on smaller screens */
+#nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+}
+
+#nav a {
+    margin-right: 0;
+}
