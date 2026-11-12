@@ -126,10 +126,17 @@ function createApp(db, { sessionSecret } = {}) {
     return res.sendFile(path.join(pages, 'musicianProfile_012-2.html'));
   });
 
+  // Send the user back to the register page with a message to show under one field.
+  function registerError(message, field) {
+    const params = new URLSearchParams({ error: message });
+    if (field) params.set('field', field);
+    return '/register?' + params.toString();
+  }
+
     app.post('/register', async (req, res) => {
     const result = validateRegistration(req.body);
     if (result.error) {
-      return res.redirect('/register?error=' + encodeURIComponent(result.error));
+      return res.redirect(registerError(result.error, result.field));
     }
 
     const { username, email, password, role } = result.data;
@@ -159,11 +166,15 @@ function createApp(db, { sessionSecret } = {}) {
 
     } catch (error) {
       if (error.code === '23505') {
-        return res.redirect('/register?error=exists');
+        // Postgres names the unique constraint that failed, e.g. users_email_key.
+        if (error.constraint && error.constraint.includes('email')) {
+          return res.redirect(registerError('An account with that email already exists.', 'email'));
+        }
+        return res.redirect(registerError('That username is already taken.', 'username'));
       }
 
       console.error('Registration failed:', error.message);
-      return res.redirect('/register?error=server');
+      return res.redirect(registerError('Something went wrong. Please try again.'));
     }
   });
 

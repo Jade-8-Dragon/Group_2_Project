@@ -35,6 +35,7 @@
                             autocomplete="username"
                             required
                         >
+                        <div class="invalid-feedback" id="username-error"></div>
                     </div>
 
                     <!--Password-->
@@ -49,6 +50,7 @@
                             autocomplete="new-password"
                             required
                         >
+                        <div class="invalid-feedback" id="password-error"></div>
                     </div>
 
                     <div class="mb-4">
@@ -62,6 +64,7 @@
                             autocomplete="email"
                             required
                         >
+                        <div class="invalid-feedback" id="email-error"></div>
                     </div>
 
                     <fieldset class="mb-4 text-center">
@@ -93,7 +96,11 @@
                             Musician
                         </label>
                     </div>
+                    <div class="invalid-feedback" id="role-error"></div>
                 </fieldset>
+
+                    <!--Errors that don't belong to one field-->
+                    <div class="alert alert-danger d-none" id="form-error" role="alert"></div>
 
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">
@@ -113,5 +120,8 @@
         <footer id="footer">
             <p class="mb-0">© 2026 Group 2 Project</p>
         </footer>
+
+        <!--Shows server error messages under the matching field-->
+        <script src="js/register.js"></script>
     </body>
 </html>
