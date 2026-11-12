@@ -91,3 +91,53 @@ describe('POST /register (integration tests)', () => {
     expect(rows).to.have.lengthOf(0);
   });
 });
+
+describe('GET /api/profile (extra credit integration tests)', () => {
+  const username = `lab10_${randomUUID().replace(/-/g, '').slice(0, 16)}`;
+  const email = `${username}@example.com`;
+  const password = 'TestPassword123!';
+  let agent;
+
+  async function removeTestUser() {
+    await db.none('DELETE FROM users WHERE username = $1', [username]);
+  }
+
+  beforeEach(async () => {
+    await removeTestUser();
+    const hash = await bcrypt.hash(password, 10);
+    await db.none(
+      'INSERT INTO users (username, email, password_hash, user_type) VALUES ($1, $2, $3, $4)',
+      [username, email, hash, 'customer']
+    );
+    agent = chai.request.agent(app);
+  });
+
+  afterEach(async () => {
+    agent.close();
+    await removeTestUser();
+  });
+
+  it('returns the logged-in user\'s profile after POST /login', async () => {
+    const login = await agent
+      .post('/login')
+      .redirects(0)
+      .type('form')
+      .send({ username, password });
+    expect(login).to.have.status(302);
+    expect(login.headers.location).to.equal('/discover');
+
+    const res = await agent.get('/api/profile');
+    expect(res).to.have.status(200);
+    expect(res).to.be.json;
+    expect(res.body.username).to.equal(username);
+    expect(res.body.email).to.equal(email);
+    expect(res.body.user_type).to.equal('customer');
+    expect(res.body).not.to.have.property('password_hash');
+  });
+
+  it('rejects a request without a session', async () => {
+    const res = await chai.request(app).get('/api/profile');
+    expect(res).to.have.status(401);
+    expect(res.body).to.deep.equal({ error: 'Please log in.' });
+  });
+});
