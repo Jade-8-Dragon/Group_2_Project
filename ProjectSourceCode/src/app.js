@@ -144,26 +144,20 @@ function createApp(db, { sessionSecret } = {}) {
     try {
       const hash = await bcrypt.hash(password, 10);
 
-      await db.none(
-        `INSERT INTO users
-       (username, email, password_hash, user_type)
-       VALUES ($1, $2, $3, $4)`,
-        [username, email, hash, role]
-      );
+      await db.tx(async t => {
+        const user = await t.one(
+          `INSERT INTO users (username, email, password_hash, user_type)
+           VALUES ($1, $2, $3, $4)
+           RETURNING user_id`,
+          [username, email, hash, role]
+        );
 
-    await db.tx(async t => {
-      const user = await t.one(
-        `INSERT INTO users (username, email, password_hash, user_type)
-         VALUES ($1, $2, $3, $4)
-         RETURNING user_id`,
-        [username, email, hash, role]
-      );
+        if (role === 'musician') {
+          await t.none('INSERT INTO musician_profiles (user_id) VALUES ($1)', [user.user_id]);
+        }
+      });
 
-      if (role === 'musician') {
-        await t.none('INSERT INTO musician_profiles (user_id) VALUES ($1)', [user.user_id]);
-      }
-    });
-
+      return res.redirect('/login');
     } catch (error) {
       if (error.code === '23505') {
         // Postgres names the unique constraint that failed, e.g. users_email_key.
@@ -177,7 +171,6 @@ function createApp(db, { sessionSecret } = {}) {
       return res.redirect(registerError('Something went wrong. Please try again.'));
     }
   });
-
 
   app.post('/login', async (req, res) => {
     const credentials = loginCredentials(req.body);
