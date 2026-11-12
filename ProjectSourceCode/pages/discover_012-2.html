@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discover</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            background-color: white;
+        }
+
+        .search-bar {
+            width: 40%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            font-size: 16px;
+        }
+
+        .profile-button {
+            position: absolute;
+            right: 20px;
+            text-decoration: none;
+            color: black;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 30px;
+            text-align: center;
+        }
+
+        .category {
+            background-color: white;
+            padding: 20px;
+            margin: 15px auto;
+            width: 70%;
+            border-radius: 10px;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            border-top: 1px solid #ccc;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+        }
+
+        .bottom-nav a {
+            text-decoration: none;
+            color: black;
+            font-size: 16px;
+        }
+
+        .bottom-nav a:hover,
+        .profile-button:hover {
+            color: blue;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Navigation -->
+    <div class="top-nav">
+
+        <input type="search" class="search-bar"
+            placeholder="Search...">
+
+        <a href="profile.html" class="profile-button">
+            👤 Profile
+        </a>
+
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <h1>Discover</h1>
+        <p>Explore active bands and shows!</p>
+
+        <div class="category">
+            <h2>Popular</h2>
+            <p>Check out popular content.</p>
+        </div>
+
+        <div class="category">
+            <h2>Recently Added</h2>
+            <p>Explore the latest posts.</p>
+        </div>
+
+        <div class="category">
+            <h2>Recommended</h2>
+            <p>Discover something new.</p>
+        </div>
+
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+
+        <a href="home_012-2.html">🏠 Home</a>
+        <a href="discover_012-2.html">🔍 Discover</a>
+        <a href="create_012-2.html">➕ Create</a>
+
+    </nav>
+
+</body>
+</html>
+```
