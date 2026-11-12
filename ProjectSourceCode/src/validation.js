@@ -11,7 +11,7 @@ function validateRegistration(body = {}) {
   }
   if (password.length < 8 || Buffer.byteLength(password, 'utf8') > 72 ||
       !/[0-9]/.test(password) || !/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-    return { error: 'Password must be 8-72 bytes and include a number and a special character.', field: 'password' };
+    return { error: 'Password must be at least 8 characters and include at least one number and one special character. Please use a shorter password if necessary.', field: 'password' };
   }
   if (!['customer', 'musician'].includes(role)) {
     return { error: 'Choose a customer or musician account.', field: 'role' };
