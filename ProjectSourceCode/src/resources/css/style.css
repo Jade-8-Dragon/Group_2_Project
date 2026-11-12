@@ -401,6 +401,35 @@ body.registration-page {
     gap: 12px 20px;
 }
 
+/*Navigation Bar Logo*/
 #nav a {
     margin-right: 0;
+}
+
+.top-nav {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.site-logo {
+    display: block;
+    flex-shrink: 0;
+}
+
+.site-logo img {
+    display: block;
+    width: 200px;
+    height: auto;
+}
+
+.search-bar {
+    flex: 1;
+    width: auto;
+    min-width: 160px;
+}
+
+.profile-button {
+    position: static;
+    margin-left: auto;
 }

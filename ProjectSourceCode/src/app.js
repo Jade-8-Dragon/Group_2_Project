@@ -14,6 +14,7 @@ function createApp(db, { sessionSecret } = {}) {
   }
 
   const app = express();
+  app.use('/img', express.static(path.join(resources, 'img')));
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use('/css', express.static(path.join(resources, 'css')));
