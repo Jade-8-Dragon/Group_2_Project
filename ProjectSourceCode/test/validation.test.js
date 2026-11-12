@@ -27,6 +27,17 @@ test('registration rejects missing, weak, or invalid fields', () => {
   assert.ok(validateRegistration().error);
 });
 
+test('registration errors name the field they belong to', () => {
+  for (const [change, field] of [
+    [{ username: '' }, 'username'],
+    [{ email: 'invalid' }, 'email'],
+    [{ password: 'password' }, 'password'],
+    [{ role: 'admin' }, 'role'],
+  ]) {
+    assert.equal(validateRegistration({ ...valid, ...change }).field, field, JSON.stringify(change));
+  }
+});
+
 test('login supports either an email or username', () => {
   assert.deepEqual(loginCredentials({ identifier: ' user@example.com ', password: 'secret' }), {
     identifier: 'user@example.com', password: 'secret',
