@@ -126,34 +126,31 @@ function createApp(db, { sessionSecret } = {}) {
     return res.sendFile(path.join(pages, 'musicianProfile_012-2.html'));
   });
 
-    app.post('/register', async (req, res) => {
-  const result = validateRegistration(req.body);
+  app.post('/register', async (req, res) => {
+    const result = validateRegistration(req.body);
+    if (result.error) {
+      return res.redirect('/register?error=' + encodeURIComponent(result.error));
+    }
 
     const { username, email, password, role } = result.data;
 
     try {
       const hash = await bcrypt.hash(password, 10);
 
-      await db.none(
-        `INSERT INTO users
-       (username, email, password_hash, user_type)
-       VALUES ($1, $2, $3, $4)`,
-        [username, email, hash, role]
-      );
+      await db.tx(async t => {
+        const user = await t.one(
+          `INSERT INTO users (username, email, password_hash, user_type)
+           VALUES ($1, $2, $3, $4)
+           RETURNING user_id`,
+          [username, email, hash, role]
+        );
 
-    await db.tx(async t => {
-      const user = await t.one(
-        `INSERT INTO users (username, email, password_hash, user_type)
-         VALUES ($1, $2, $3, $4)
-         RETURNING user_id`,
-        [username, email, hash, role]
-      );
+        if (role === 'musician') {
+          await t.none('INSERT INTO musician_profiles (user_id) VALUES ($1)', [user.user_id]);
+        }
+      });
 
-      if (role === 'musician') {
-        await t.none('INSERT INTO musician_profiles (user_id) VALUES ($1)', [user.user_id]);
-      }
-    });
-
+      return res.redirect('/login');
     } catch (error) {
       if (error.code === '23505') {
         return res.redirect('/register?error=exists');
@@ -163,7 +160,6 @@ function createApp(db, { sessionSecret } = {}) {
       return res.redirect('/register?error=server');
     }
   });
-
 
   app.post('/login', async (req, res) => {
     const credentials = loginCredentials(req.body);
