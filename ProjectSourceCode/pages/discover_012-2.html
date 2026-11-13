@@ -31,9 +31,19 @@
             font-size: 16px;
         }
 
-        .profile-button {
+        .search-button {
+            padding: 12px 18px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .about-button {
             position: absolute;
             right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
             text-decoration: none;
             color: black;
         }
@@ -42,6 +52,7 @@
         .main-content {
             padding: 30px;
             text-align: center;
+            padding-bottom: 90px;
         }
 
         .category {
@@ -62,6 +73,7 @@
             border-top: 1px solid #ccc;
             display: flex;
             justify-content: space-around;
+            align-items: center;
             padding: 15px 0;
         }
 
@@ -69,6 +81,8 @@
             text-decoration: none;
             color: black;
             font-size: 16px;
+            flex: 1;
+            text-align: center;
         }
 
         .bottom-nav a:hover,
@@ -89,8 +103,6 @@
             id="musician-search"
             placeholder="Search musicians..."
         >
-
-        <button id="search-button">Search</button>
 
         <a href="about_012-2.html" class="about-button">
             About
@@ -129,9 +141,7 @@
     <nav class="bottom-nav">
         <a href="/discover">🔍 Discover</a>
         <a href="/create">➕ Create</a>
-        <a href="profile.html" class="profile-button">
-            👤 Profile
-        </a>
+        <a href="profile.html">👤 Profile</a>
 
     </nav>
 
