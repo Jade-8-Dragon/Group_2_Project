@@ -28,4 +28,44 @@ function loginCredentials(body = {}) {
   return { identifier, password };
 }
 
-module.exports = { validateRegistration, loginCredentials };
+function validateMusicianSetup(body = {}) {
+  const text = value => (typeof value === 'string' ? value.trim() : '');
+  const stageName = text(body.stage_name);
+  const bio = text(body.bio);
+  const location = text(body.location);
+  const priceText = text(body.starting_price);
+  const avatarUrl = text(body.avatar_url);
+
+  if (!stageName || stageName.length > 100) return { error: 'Stage name must be 1-100 characters.' };
+  if (bio.length > 500) return { error: 'Bio must be 500 characters or less.' };
+  if (location.length > 100) return { error: 'Location must be 100 characters or less.' };
+
+  let startingPrice = null;
+  if (priceText) {
+    startingPrice = Number(priceText);
+    if (!Number.isFinite(startingPrice) || startingPrice < 0 || startingPrice > 100000) {
+      return { error: 'Starting price must be between 0 and 100000.' };
+    }
+    startingPrice = Math.round(startingPrice * 100) / 100;
+  }
+
+  if (avatarUrl) {
+    let parsed = null;
+    try { parsed = new URL(avatarUrl); } catch { /* invalid URL */ }
+    if (!parsed || !['http:', 'https:'].includes(parsed.protocol) || avatarUrl.length > 500) {
+      return { error: 'Profile picture must be a valid http or https link.' };
+    }
+  }
+
+  return {
+    data: {
+      stageName,
+      bio: bio || null,
+      location: location || null,
+      startingPrice,
+      avatarUrl: avatarUrl || null,
+    },
+  };
+}
+
+module.exports = { validateRegistration, loginCredentials, validateMusicianSetup };
