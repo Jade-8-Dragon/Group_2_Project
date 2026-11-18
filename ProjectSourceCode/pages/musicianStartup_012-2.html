@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Reserve Music | Set Up Your Profile</title>
+
+        <!--Bootstrap Link-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+
+    <body class="bg-light">
+        <main class="container my-5" style="max-width: 640px;">
+            <div class="card shadow-sm">
+                <div class="card-body p-4">
+                    <h1 class="h3 mb-1">Set up your musician profile</h1>
+                    <p class="text-muted mb-4">
+                        Tell customers about yourself. You can change any of this later from your profile page.
+                    </p>
+
+                    <!--Plain form post, same pattern as /register and /login-->
+                    <form method="POST" action="/musician/setup">
+
+                        <div class="mb-3">
+                            <label for="stage_name" class="form-label">Stage name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="stage_name" name="stage_name"
+                                   maxlength="100" required placeholder="e.g. The Midnight Owls">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="bio" class="form-label">Bio</label>
+                            <textarea class="form-control" id="bio" name="bio" rows="4" maxlength="500"
+                                      aria-describedby="bio-help"
+                                      placeholder="What kind of music do you play? What events do you perform at?"></textarea>
+                            <div id="bio-help" class="form-text">Up to 500 characters.</div>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-12 col-md-6">
+                                <label for="location" class="form-label">Location</label>
+                                <input type="text" class="form-control" id="location" name="location"
+                                       maxlength="100" placeholder="City, State">
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label for="starting_price" class="form-label">Starting price</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="number" class="form-control" id="starting_price" name="starting_price"
+                                           min="0" step="0.01" placeholder="0.00">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="avatar_url" class="form-label">Profile picture URL</label>
+                            <input type="url" class="form-control" id="avatar_url" name="avatar_url"
+                                   maxlength="500" placeholder="https://example.com/photo.jpg">
+                            <div class="form-text">Optional. Paste a link to an image for now.</div>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="/discover" class="btn btn-link text-muted text-decoration-none">Skip for now</a>
+                            <button type="submit" class="btn btn-dark">Save and continue</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+
+        <footer class="text-center text-muted py-3">
+            <p class="mb-0">&copy; 2026 Group 2 Project</p>
+        </footer>
+    </body>
+</html>
