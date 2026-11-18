@@ -9,6 +9,14 @@ CREATE TABLE users (
     avatar_url TEXT
 );
 
+CREATE TABLE password_reset_tokens (
+    token_id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+    token_hash VARCHAR(255) NOT NULL UNIQUE,
+    expires_at TIMESTAMP NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE musician_profiles (
     user_id INTEGER PRIMARY KEY
         REFERENCES users(user_id) ON DELETE CASCADE,
