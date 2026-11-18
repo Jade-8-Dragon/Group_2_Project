@@ -2,6 +2,8 @@ require('dotenv').config();
 const pgp = require('pg-promise')();
 const { createApp } = require('./app');
 
+const { verifyEmailConnection } = require('./email');
+
 const db = pgp({
   host: 'db',
   port: 5432,
@@ -18,6 +20,7 @@ db.connect()
   .catch(error => console.log('ERROR:', error.message || error));
 
 const app = createApp(db, { sessionSecret: process.env.SESSION_SECRET });
+verifyEmailConnection();
 
 const port = process.env.PORT || 3000;
 app.listen(port, '0.0.0.0', () => {

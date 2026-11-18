@@ -20,6 +20,21 @@ function validateRegistration(body = {}) {
   return { data: { username, email, password, role } };
 }
 
+function validatePassword(password) {
+  if (typeof password !== 'string' ||
+      password.length < 8 ||
+      Buffer.byteLength(password, 'utf8') > 72 ||
+      !/[0-9]/.test(password) ||
+      !/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+    return {
+      error: 'Password must be at least 8 characters and include at least one number and one special character. Please use a shorter password if necessary.',
+      field: 'password'
+    };
+  }
+
+  return { data: password };
+}
+
 function loginCredentials(body = {}) {
   const value = body.identifier || body.username || body.email;
   const identifier = typeof value === 'string' ? value.trim() : '';
@@ -28,4 +43,4 @@ function loginCredentials(body = {}) {
   return { identifier, password };
 }
 
-module.exports = { validateRegistration, loginCredentials };
+module.exports = { validateRegistration, loginCredentials, validatePassword};

@@ -1,8 +1,9 @@
 const express = require('express');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
+const {generateToken, hashToken, sendPasswordResetEmail} = require('./email');
 const path = require('path');
-const { validateRegistration, loginCredentials } = require('./validation');
+const { validateRegistration, validatePassword, loginCredentials } = require('./validation');
 const { musicianId, listMusicians, findMusician } = require('./musicians');
 
 const pages = path.resolve(__dirname, '..', 'pages');
@@ -34,6 +35,8 @@ function createApp(db, { sessionSecret } = {}) {
   app.get('/health', (req, res) => res.json({ status: 'ok' }));
   app.get('/register', (req, res) => res.sendFile(path.join(pages, 'register_012-2.html')));
   app.get('/login', (req, res) => res.sendFile(path.join(pages, 'login_012-2.html')));
+  app.get('/forgot-password', (req, res) => {res.sendFile(path.join(pages, 'forgot_password_012-2.html'));});
+  app.get('/reset-password', (req, res) => {res.sendFile(path.join(pages, 'reset_password_012-2.html'));});
 
   app.get('/home', requireLogin, (req, res) => {
     res.sendFile(path.join(pages, 'home_012-2.html'));
@@ -202,6 +205,135 @@ function createApp(db, { sessionSecret } = {}) {
       return res.redirect('/login?error=server');
     }
   });
+
+  app.post('/forgot-password', async (req, res) => {
+  const email = typeof req.body.email === 'string'
+    ? req.body.email.trim().toLowerCase()
+    : '';
+
+  try {
+    const user = await db.oneOrNone(
+      'SELECT user_id, email FROM users WHERE LOWER(email) = $1',
+      [email]
+    );
+
+    // Always return the same message, whether the account exists or not.
+    if (user) {
+      const token = generateToken();
+      const tokenHash = hashToken(token);
+
+      await db.tx(async t => {
+        // Invalidate any previous reset links for this user.
+        await t.none(
+          'DELETE FROM password_reset_tokens WHERE user_id = $1',
+          [user.user_id]
+        );
+
+        await t.none(
+          `INSERT INTO password_reset_tokens (user_id, token_hash, expires_at)
+           VALUES ($1, $2, NOW() + INTERVAL '30 minutes')`,
+          [user.user_id, tokenHash]
+        );
+      });
+
+      await sendPasswordResetEmail(user.email, token);
+    }
+
+    return res.send(
+      'If an account exists with that email, a password reset link has been sent.'
+    );
+  } catch (error) {
+    console.error('Password reset request failed:', error.message);
+    return res.status(500).send('Something went wrong. Please try again.');
+  }
+});
+
+app.post('/reset-password', async (req, res) => {
+  const { token, password, confirmPassword } = req.body;
+
+  // Make sure both password fields match.
+  if (password !== confirmPassword) {
+    return res.status(400).send('Passwords do not match.');
+  }
+
+  // Validate the new password.
+  const validation = validatePassword(password);
+
+  if (validation.error) {
+    return res.status(400).send(validation.error);
+  }
+
+  // Make sure the reset token is valid in format.
+  if (typeof token !== 'string' || !/^[a-f0-9]{64}$/i.test(token)) {
+    return res.status(400).send('Invalid or expired reset link.');
+  }
+
+  try {
+    const tokenHash = hashToken(token);
+
+    const success = await db.tx(async t => {
+      // Find and lock the token so it cannot be reused.
+      const resetToken = await t.oneOrNone(
+        `SELECT user_id
+         FROM password_reset_tokens
+         WHERE token_hash = $1 AND expires_at > NOW()
+         FOR UPDATE`,
+        [tokenHash]
+      );
+
+      if (!resetToken) return false;
+
+      // Hash the new password.
+      const passwordHash = await bcrypt.hash(password, 10);
+
+      // Update the user's password.
+      await t.none(
+        'UPDATE users SET password_hash = $1 WHERE user_id = $2',
+        [passwordHash, resetToken.user_id]
+      );
+
+      // Invalidate all reset links for this user.
+      await t.none(
+        'DELETE FROM password_reset_tokens WHERE user_id = $1',
+        [resetToken.user_id]
+      );
+
+      return true;
+    });
+
+    if (!success) {
+      return res.status(400).send('Invalid or expired reset link.');
+    }
+
+    return res.send(`
+    <html>
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Password Reset Successful</title>
+            <meta http-equiv="refresh" content="3;url=/login">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+            <link rel="stylesheet" href="/css/style.css">
+        </head>
+        <body class="registration-page">
+            <main class="registration-main">
+                <div class="registration-content text-center">
+                    <div class="alert alert-success" role="alert">
+                        Your password has been reset successfully!
+                    </div>
+                    <p>Redirecting you to the login page...</p>
+                    <a href="/login">Click here if you aren't redirected.</a>
+                </div>
+            </main>
+        </body>
+    </html>
+`);
+
+  } catch (error) {
+    console.error('Password reset failed:', error.message);
+    return res.status(500).send('Something went wrong. Please try again.');
+  }
+});
 
   app.get('/api/reviews', requireApiLogin, async (req, res) => {
     try {
