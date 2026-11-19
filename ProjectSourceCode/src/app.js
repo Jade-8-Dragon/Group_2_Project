@@ -3,7 +3,7 @@ const session = require('express-session');
 const bcrypt = require('bcryptjs');
 const {generateToken, hashToken, sendPasswordResetEmail, sendVerificationEmail} = require('./email');
 const path = require('path');
-const { validateRegistration, validatePassword, loginCredentials } = require('./validation');
+const { validateRegistration, validatePassword, loginCredentials, validateMusicianSetup } = require('./validation');
 const { musicianId, listMusicians, findMusician } = require('./musicians');
 const { validateSongLinks, profileWithSongs } = require('./songLinks');
 
@@ -57,6 +57,53 @@ function createApp(db, { sessionSecret } = {}) {
       ? 'musicianProfile_012-2.html'
       : 'userProfile_012-2.html';
     return res.sendFile(path.join(pages, file));
+  });
+
+    const requireMusician = (req, res, next) => {
+    if (req.session.user.user_type !== 'musician') return res.redirect('/discover');
+    next();
+  };
+
+  app.get('/musician/setup', requireLogin, requireMusician, (req, res) => {
+    return res.sendFile(path.join(pages, 'musicianSetup_012-2.html'));
+  });
+
+  app.post('/musician/setup', requireLogin, requireMusician, async (req, res) => {
+    const result = validateMusicianSetup(req.body);
+    if (result.error) {
+      return res.redirect('/musician/setup?error=' + encodeURIComponent(result.error));
+    }
+
+    const { stageName, bio, location, startingPrice, avatarUrl } = result.data;
+    const userId = req.session.user.user_id;
+
+    try {
+      await db.tx(async t => {
+        const updated = await t.oneOrNone(
+          `UPDATE musician_profiles
+           SET stage_name = $1, bio = $2, location = $3, starting_price = $4
+           WHERE user_id = $5
+           RETURNING user_id`,
+          [stageName, bio, location, startingPrice, userId]
+        );
+
+        // Older accounts may not have a profile row yet
+        if (!updated) {
+          await t.none(
+            `INSERT INTO musician_profiles (user_id, stage_name, bio, location, starting_price)
+             VALUES ($1, $2, $3, $4, $5)`,
+            [userId, stageName, bio, location, startingPrice]
+          );
+        }
+
+        await t.none('UPDATE users SET avatar_url = $1 WHERE user_id = $2', [avatarUrl, userId]);
+      });
+
+      return res.redirect('/profile');
+    } catch (error) {
+      console.error('Could not save musician setup:', error.message);
+      return res.redirect('/musician/setup?error=' + encodeURIComponent('Could not save your profile.'));
+    }
   });
 
   const requireApiLogin = (req, res, next) => {
@@ -319,6 +366,25 @@ app.post('/resend-verification', async (req, res) => {
         [credentials.identifier]
       );
       if (!user || !(await bcrypt.compare(credentials.password, user.password_hash))) {
+        return res.redirect('/login?error=invalid');
+      }
+
+      if (!user.email_verified) {
+        return res.redirect(
+          `/login?error=unverified&identifier=${encodeURIComponent(credentials.identifier)}`
+        );
+      }
+
+      // Musicians who haven't filled in a stage name go to setup first
+      let destination = '/discover';
+      if (user.user_type === 'musician') {
+        const profile = await db.oneOrNone(
+          'SELECT stage_name FROM musician_profiles WHERE user_id = $1',
+          [user.user_id]
+        );
+        if (!profile || !profile.stage_name) destination = '/musician/setup';
+      }
+      if (!user || !(await bcrypt.compare(credentials.password, user.password_hash))) {
           return res.redirect('/login?error=invalid');
       }
 
@@ -337,7 +403,7 @@ app.post('/resend-verification', async (req, res) => {
         };
         req.session.save(saveError => {
           if (saveError) return res.redirect('/login?error=server');
-          return res.redirect('/discover');
+          return res.redirect(destination);   // was '/discover'
         });
       });
     } catch (error) {
@@ -518,6 +584,10 @@ app.post('/reset-password', async (req, res) => {
 
   app.get('/create_012-2.html', (req, res) => {
     res.redirect('/create');
+  });
+
+  app.get('/profile.html', (req, res) => {
+    res.redirect('/profile');
   });
 
   app.get('/profile.html', (req, res) => {
