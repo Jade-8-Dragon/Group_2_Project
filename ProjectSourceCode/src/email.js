@@ -45,10 +45,32 @@ This link expires in 30 minutes. If you did not request this, you can ignore thi
   });
 }
 
+
+async function sendVerificationEmail(email, token) {
+  const verificationLink = `${process.env.APP_BASE_URL}/verify-email?token=${token}`;
+
+  await transporter.sendMail({
+    from: `"Reserve Music" <${process.env.EMAIL_USER}>`,
+    to: email,
+    subject: 'Verify Your Reserve Music Email',
+    text: `Welcome to Reserve Music! Please verify your email address by clicking this link: ${verificationLink}
+
+This link expires in 30 minutes. If you did not create this account, you can ignore this email.`,
+    html: `
+      <h2>Welcome to Reserve Music!</h2>
+      <p>Thanks for creating an account. Please verify your email address.</p>
+      <p><a href="${verificationLink}">Verify My Email</a></p>
+      <p>This link expires in 30 minutes.</p>
+    `,
+  });
+}
+
+
 module.exports = {
   transporter,
   verifyEmailConnection,
   generateToken,
   hashToken,
   sendPasswordResetEmail,
+  sendVerificationEmail,
 };
