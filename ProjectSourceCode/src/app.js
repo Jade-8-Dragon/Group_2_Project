@@ -1,7 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
-const {generateToken, hashToken, sendPasswordResetEmail} = require('./email');
+const {generateToken, hashToken, sendPasswordResetEmail, sendVerificationEmail} = require('./email');
 const path = require('path');
 const { validateRegistration, validatePassword, loginCredentials } = require('./validation');
 const { musicianId, listMusicians, findMusician } = require('./musicians');
@@ -136,44 +136,153 @@ function createApp(db, { sessionSecret } = {}) {
     return '/register?' + params.toString();
   }
 
-    app.post('/register', async (req, res) => {
-    const result = validateRegistration(req.body);
-    if (result.error) {
-      return res.redirect(registerError(result.error, result.field));
-    }
+  
+app.post('/register', async (req, res) => {
+  const result = validateRegistration(req.body);
+  if (result.error) {
+    return res.redirect(registerError(result.error, result.field));
+  }
 
-    const { username, email, password, role } = result.data;
+  const { username, email, password, role } = result.data;
 
-    try {
-      const hash = await bcrypt.hash(password, 10);
+  try {
+    const hash = await bcrypt.hash(password, 10);
+    const verificationToken = generateToken();
+    const tokenHash = hashToken(verificationToken);
 
-      await db.tx(async t => {
-        const user = await t.one(
-          `INSERT INTO users (username, email, password_hash, user_type)
-           VALUES ($1, $2, $3, $4)
-           RETURNING user_id`,
-          [username, email, hash, role]
+    await db.tx(async t => {
+      const user = await t.one(
+        `INSERT INTO users (username, email, password_hash, user_type)
+         VALUES ($1, $2, $3, $4)
+         RETURNING user_id`,
+        [username, email, hash, role]
+      );
+
+      if (role === 'musician') {
+        await t.none(
+          'INSERT INTO musician_profiles (user_id) VALUES ($1)',
+          [user.user_id]
         );
-
-        if (role === 'musician') {
-          await t.none('INSERT INTO musician_profiles (user_id) VALUES ($1)', [user.user_id]);
-        }
-      });
-
-      return res.redirect('/login');
-    } catch (error) {
-      if (error.code === '23505') {
-        // Postgres names the unique constraint that failed, e.g. users_email_key.
-        if (error.constraint && error.constraint.includes('email')) {
-          return res.redirect(registerError('An account with that email already exists.', 'email'));
-        }
-        return res.redirect(registerError('That username is already taken.', 'username'));
       }
 
-      console.error('Registration failed:', error.message);
-      return res.redirect(registerError('Something went wrong. Please try again.'));
+      await t.none(
+        `INSERT INTO email_verification_tokens
+         (user_id, token_hash, expires_at)
+         VALUES ($1, $2, NOW() + INTERVAL '30 minutes')`,
+        [user.user_id, tokenHash]
+      );
+
+      await sendVerificationEmail(email, verificationToken);
+    });
+
+    return res.redirect('/login?message=verify-email');
+  } catch (error) {
+    if (error.code === '23505') {
+      if (error.constraint && error.constraint.includes('email')) {
+        return res.redirect(registerError('An account with that email already exists.', 'email'));
+      }
+      return res.redirect(registerError('That username is already taken.', 'username'));
     }
-  });
+
+    console.error('Registration failed:', error.message);
+    return res.redirect(registerError('Something went wrong. Please try again.'));
+  }
+});
+
+
+app.get('/verify-email', async (req, res) => {
+  const token = req.query.token;
+
+  if (typeof token !== 'string' || !/^[a-f0-9]{64}$/i.test(token)) {
+    return res.status(400).send('Invalid verification link.');
+  }
+
+  try {
+    const tokenHash = hashToken(token);
+
+    const verified = await db.tx(async t => {
+      const record = await t.oneOrNone(
+        `SELECT user_id
+         FROM email_verification_tokens
+         WHERE token_hash = $1 AND expires_at > NOW()
+         FOR UPDATE`,
+        [tokenHash]
+      );
+
+      if (!record) return false;
+
+      await t.none(
+        'UPDATE users SET email_verified = TRUE WHERE user_id = $1',
+        [record.user_id]
+      );
+
+      await t.none(
+        'DELETE FROM email_verification_tokens WHERE user_id = $1',
+        [record.user_id]
+      );
+
+      return true;
+    });
+
+    if (!verified) {
+      return res.status(400).send('This verification link is invalid or has expired.');
+    }
+
+    return res.send(`
+      <h2>Email Verified Successfully!</h2>
+      <p>Your Reserve Music account is now verified.</p>
+      <a href="/login">Continue to Login</a>
+    `);
+  } catch (error) {
+    console.error('Email verification failed:', error.message);
+    return res.status(500).send('Something went wrong. Please try again.');
+  }
+});
+
+app.post('/resend-verification', async (req, res) => {
+  const identifier = typeof req.body.identifier === 'string'
+    ? req.body.identifier.trim()
+    : '';
+
+  try {
+    const user = await db.oneOrNone(
+      `SELECT user_id, email, email_verified
+       FROM users
+       WHERE username = $1 OR LOWER(email) = LOWER($1)`,
+      [identifier]
+    );
+
+    if (user && !user.email_verified) {
+      const token = generateToken();
+      const tokenHash = hashToken(token);
+
+      await db.tx(async t => {
+        // Invalidate previous verification links.
+        await t.none(
+          'DELETE FROM email_verification_tokens WHERE user_id = $1',
+          [user.user_id]
+        );
+
+        // Store the new verification token.
+        await t.none(
+          `INSERT INTO email_verification_tokens
+           (user_id, token_hash, expires_at)
+           VALUES ($1, $2, NOW() + INTERVAL '30 minutes')`,
+          [user.user_id, tokenHash]
+        );
+      });
+
+      await sendVerificationEmail(user.email, token);
+    }
+
+    return res.sendStatus(200);
+
+  } catch (error) {
+    console.error('Verification email resend failed:', error.message);
+    return res.sendStatus(500);
+  }
+});
+
 
   app.post('/login', async (req, res) => {
     const credentials = loginCredentials(req.body);
@@ -181,12 +290,18 @@ function createApp(db, { sessionSecret } = {}) {
 
     try {
       const user = await db.oneOrNone(
-        'SELECT user_id, username, email, user_type, password_hash FROM users WHERE username = $1 OR LOWER(email) = LOWER($1)',
+        'SELECT user_id, username, email, user_type, password_hash, email_verified FROM users WHERE username = $1 OR LOWER(email) = LOWER($1)',
         [credentials.identifier]
       );
       if (!user || !(await bcrypt.compare(credentials.password, user.password_hash))) {
-        return res.redirect('/login?error=invalid');
+          return res.redirect('/login?error=invalid');
       }
+
+      if (!user.email_verified) {
+  return res.redirect(
+    `/login?error=unverified&identifier=${encodeURIComponent(credentials.identifier)}`
+  );
+}
 
       req.session.regenerate(error => {
         if (error) return res.redirect('/login?error=server');
