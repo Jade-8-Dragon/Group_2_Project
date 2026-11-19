@@ -23,3 +23,11 @@ can't be hacked for user information
 4. The fourth issue would be getting payment information for booking
 an artist and taking some profit
 5. The fifth issue would be creating a artists information page
+
+11/18/2026
+Small things left to finish in the website
+Website runs
+Next week we are deploying the website
+We have to do release notes
+Fio completed pages for setting up the musicians profile page
+Fio did Java for the musician profile setup page

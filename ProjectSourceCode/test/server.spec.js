@@ -82,12 +82,9 @@ describe('POST /register (integration tests)', () => {
 
     expect(res).to.have.status(302);
     expect(res.headers.location).to.match(/^\/register\?error=/);
-<<<<<<< HEAD
     expect(
       decodeURIComponent(res.headers.location)
     ).to.include('Password');
-=======
->>>>>>> origin
 
     const rows = await db.any(
       'SELECT user_id FROM users WHERE username = $1',
