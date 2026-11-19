@@ -5,6 +5,7 @@ const {generateToken, hashToken, sendPasswordResetEmail, sendVerificationEmail} 
 const path = require('path');
 const { validateRegistration, validatePassword, loginCredentials } = require('./validation');
 const { musicianId, listMusicians, findMusician } = require('./musicians');
+const { validateSongLinks, profileWithSongs } = require('./songLinks');
 
 const pages = path.resolve(__dirname, '..', 'pages');
 const resources = path.join(__dirname, 'resources');
@@ -15,6 +16,7 @@ function createApp(db, { sessionSecret } = {}) {
   }
 
   const app = express();
+  app.use('/img', express.static(path.join(resources, 'img')));
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use('/css', express.static(path.join(resources, 'css')));
@@ -68,13 +70,13 @@ function createApp(db, { sessionSecret } = {}) {
     try {
       const profile = await db.oneOrNone(
         `SELECT u.username, u.email, u.user_type, u.avatar_url,
-                m.stage_name, m.bio, m.location, m.starting_price
+                m.stage_name, m.bio, m.location, m.starting_price, m.song_links
          FROM users u
          LEFT JOIN musician_profiles m ON m.user_id = u.user_id
          WHERE u.user_id = $1`,
         [req.session.user.user_id]
       );
-      return res.json(profile);
+      return res.json(profile && profileWithSongs(profile));
     } catch (error) {
       console.error('Could not load profile:', error.message);
       return res.status(500).json({ error: 'Server error' });
@@ -101,6 +103,29 @@ function createApp(db, { sessionSecret } = {}) {
     }
   });
 
+  app.put('/api/profile/songs', requireApiLogin, async (req, res) => {
+    const user = req.session.user;
+    if (user.user_type !== 'musician') {
+      return res.status(403).json({ error: 'Only musicians can edit song links.' });
+    }
+
+    const { songs, error } = validateSongLinks(req.body?.links);
+    if (error) return res.status(400).json({ error });
+
+    try {
+      await db.none(
+        `INSERT INTO musician_profiles (user_id, song_links)
+         VALUES ($1, $2::text[])
+         ON CONFLICT (user_id) DO UPDATE SET song_links = EXCLUDED.song_links`,
+        [user.user_id, songs.map(song => song?.url ?? null)]
+      );
+      return res.json({ songs });
+    } catch (error) {
+      console.error('Could not save song links:', error.message);
+      return res.status(500).json({ error: 'Could not save song links.' });
+    }
+  });
+
   app.get('/api/musicians', requireApiLogin, async (req, res) => {
     try {
       const musicians = await listMusicians(db, req.query.search);
@@ -117,7 +142,7 @@ function createApp(db, { sessionSecret } = {}) {
     try {
       const musician = await findMusician(db, id);
       if (!musician) return res.status(404).json({ error: 'Musician not found.' });
-      return res.json(musician);
+      return res.json(profileWithSongs(musician));
     } catch (error) {
       console.error('Could not load musician:', error.message);
       return res.status(500).json({ error: 'Could not load musician.' });
