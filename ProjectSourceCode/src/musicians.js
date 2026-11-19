@@ -28,7 +28,7 @@ async function findMusician(db, id) {
   return db.oneOrNone(`
     SELECT u.user_id, u.username,
            COALESCE(mp.stage_name, u.username) AS stage_name,
-           mp.bio, mp.location, mp.starting_price
+           u.avatar_url, mp.bio, mp.location, mp.starting_price, mp.song_links
     FROM users AS u
     LEFT JOIN musician_profiles AS mp ON mp.user_id = u.user_id
     WHERE u.user_type = 'musician' AND u.user_id = $1

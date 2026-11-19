@@ -15,37 +15,74 @@
 
         /* Top Navigation */
         .top-nav {
-            display: flex;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: 1fr minmax(0, 560px) 1fr;
+            grid-template-areas: "logo search about";
             align-items: center;
-            padding: 20px;
-            position: relative;
+            gap: 16px;
+            padding: 16px 20px;
             background-color: white;
         }
 
+        .image-logo {
+            grid-area: logo;
+            justify-self: start;
+        }
+
+        .image-logo img {
+            display: block;
+            width: 200px;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .discover-search {
+            grid-area: search;
+            display: flex;
+            gap: 8px;
+        }
+
         .search-bar {
-            width: 40%;
+            flex: 1;
+            min-width: 0;
             padding: 12px;
             border: 1px solid #ccc;
             border-radius: 25px;
             font-size: 16px;
         }
 
-        .search-button {
-            padding: 12px 18px;
-            margin-left: 10px;
-            border: none;
+        .about-button {
+            grid-area: about;
+            justify-self: end;
+            padding: 8px 16px;
+            border: 1px solid #ccc;
             border-radius: 20px;
+            background: white;
+            font: inherit;
             cursor: pointer;
         }
 
-        .about-button {
-            position: absolute;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            text-decoration: none;
-            color: black;
+        .about-button:hover {
+            background: #f2f2f2;
+        }
+
+        .about-panel {
+            box-sizing: border-box;
+            width: min(360px, calc(100% - 40px));
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+
+        .about-panel h2 {
+            margin-top: 0;
+        }
+
+        @media (max-width: 800px) {
+            .top-nav {
+                grid-template-columns: minmax(0, 1fr) auto;
+                grid-template-areas: "logo about" "search search";
+            }
         }
 
         /* Main Content */
@@ -85,8 +122,7 @@
             text-align: center;
         }
 
-        .bottom-nav a:hover,
-        .profile-button:hover {
+        .bottom-nav a:hover {
             color: blue;
         }
     </style>
@@ -94,30 +130,29 @@
 
 <body>
 
-    <!-- Top Navigation -->
-    <div class="top-nav">
-
-        <!--Navigation at top of discover page-->
-        <a href="discover" class="image-logo">
-            <img src="reserve-music-logo.png" alt="Reserve Music">
+    <header class="top-nav">
+        <a href="/discover" class="image-logo">
+            <img src="/img/reserve-music-logo.png" alt="Reserve Music">
         </a>
 
-        <!--Search Bar-->
-        <input
-            type="search"
-            class="search-bar"
-            id="musician-search"
-            placeholder="Search musicians..."
-        >
+        <div class="discover-search" role="search">
+            <input
+                type="search"
+                class="search-bar"
+                id="musician-search"
+                aria-label="Search musicians"
+                placeholder="Search musicians..."
+            >
+            <button type="button" id="search-button">Search</button>
+        </div>
 
-        <button id="search-button">Search</button>
-
-        <!--Profile Button at top of discover page-->
-        <a href="profile.html" class="profile-button">
-            👤 Profile
-        </a>
-
-    </div>
+        <button type="button" class="about-button" popovertarget="about-reserve-music">About</button>
+        <section class="about-panel" id="about-reserve-music" popover aria-labelledby="about-title">
+            <h2 id="about-title">About Reserve Music</h2>
+            <p>Reserve Music connects you with local bands and musicians for your event. Browse musicians, view their profiles, and check who’s available.</p>
+            <button type="button" popovertarget="about-reserve-music" popovertargetaction="hide">Close</button>
+        </section>
+    </header>
 
     <!-- Main Content -->
     <div class="main-content">
