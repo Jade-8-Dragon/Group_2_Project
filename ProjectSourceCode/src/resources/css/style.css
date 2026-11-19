@@ -406,6 +406,7 @@ body.registration-page {
     margin-right: 0;
 }
 
+<<<<<<< HEAD
 .top-nav {
     justify-content: flex-start;
     flex-wrap: wrap;
@@ -433,3 +434,95 @@ body.registration-page {
     position: static;
     margin-left: auto;
 }
+=======
+/* =========================
+   PROFILE PAGES (user + musician)
+   Same orange / light purple theme as login and register (issue #92).
+   Scoped to html.profile-page so it only changes the two profile pages.
+========================= */
+
+/* Overrides Bootstrap's bg-light on the body */
+.profile-page body {
+    background-color: var(--purple-light) !important;
+}
+
+/* Orange nav bar with white buttons (overrides Bootstrap's bg-white) */
+.profile-page .navbar {
+    background-color: var(--orange) !important;
+    border-bottom: none !important;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.profile-page .navbar .btn-link {
+    color: var(--white) !important;
+    font-weight: 600;
+}
+
+.profile-page .navbar .btn-outline-dark {
+    color: var(--white);
+    border-color: var(--white);
+    font-weight: 600;
+}
+
+.profile-page .navbar .btn-outline-dark:hover,
+.profile-page .navbar .btn-outline-dark:focus-visible {
+    background-color: var(--white);
+    color: var(--orange-dark);
+}
+
+/* Cards get the same orange-to-purple border as the login/register boxes */
+.profile-page .card {
+    border: 2px solid transparent;
+    border-radius: 12px;
+    background:
+        linear-gradient(white, white) padding-box,
+        linear-gradient(135deg, var(--orange), var(--purple)) border-box;
+}
+
+.profile-page .card-header,
+.profile-page .card-footer {
+    background-color: var(--white) !important;
+}
+
+.profile-page h1,
+.profile-page h2 {
+    color: var(--orange-dark);
+}
+
+.profile-page .img-thumbnail {
+    border: 3px solid var(--purple);
+}
+
+/* Song tabs */
+.profile-page .nav-tabs .nav-link {
+    color: var(--text);
+}
+
+.profile-page .nav-tabs .nav-link.active {
+    color: var(--orange-dark);
+    border-bottom: 3px solid var(--orange);
+    font-weight: 600;
+}
+
+/* Buttons inside the page (play, edit bio, save) */
+.profile-page main .btn-outline-dark {
+    color: var(--orange-dark);
+    border-color: var(--orange);
+}
+
+.profile-page main .btn-outline-dark:hover {
+    background-color: var(--orange);
+    border-color: var(--orange);
+    color: var(--white);
+}
+
+.profile-page main .btn-dark {
+    background-color: var(--orange);
+    border-color: var(--orange);
+}
+
+.profile-page main .btn-dark:hover {
+    background-color: var(--orange-dark);
+    border-color: var(--orange-dark);
+}
+>>>>>>> origin
